@@ -1,0 +1,18 @@
+Bones, the simple HTML mockup framework.
+
+Requirements:
+
+  - ActiveSupport
+  - rack
+
+Starting it up:
+
+	- Clone:
+    git clone git@github.com:scharfie/bones.git
+ 
+  - Serve
+    cd bones
+    ruby system/server.rb
+ 
+  - Browse:
+    http://localhost:3000
