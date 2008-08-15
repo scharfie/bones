@@ -1,20 +1,21 @@
 require File.join(File.dirname(__FILE__), 'boot')
 require 'init'
 
-# ApplicationProxy is simply a proxy class handler
-# to the actual Application class - the reason for 
-# this is to allow live changes to the Application
+# BonesProxy is simply a proxy class handler
+# to the actual Bones class - the reason for 
+# this is to allow live changes to Bones
 # and helpers, etc.  The proxy reloads on every 
 # request
-class ApplicationProxy
+class BonesProxy
+  # Process incoming request
   def call(env)
     reload!
     Application.new.call(env)  
   end
   
+  # Reloads the application
   def reload!
-    Class.remove_class('Application') if Object.const_defined?('Application')
-    load 'application.rb'    
+    force_load 'Bones' => 'application.rb'
   end
 end
 
@@ -32,7 +33,7 @@ app = Rack::Builder.new do
    use Rack::ShowExceptions
    use Rack::Reloader
    use Rack::Static, :urls => public_directories, :root => 'public'
-   run ApplicationProxy.new
+   run BonesProxy.new
 end
 
 port = ARGV.shift || 3000
