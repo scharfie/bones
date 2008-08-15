@@ -1,26 +1,20 @@
-unless Object.const_defined?(:SYSTEM)
-  SYSTEM  = File.dirname(__FILE__) 
-  ROOT    = File.expand_path(SYSTEM + '/../')
-  $:.unshift(SYSTEM)
-end  
-
-require 'extensions'
+require File.join(File.dirname(__FILE__), 'boot') if __FILE__ == $0
 require 'fileutils'
 
 def ensure_file(path, &block)
   return if File.exist?(path)
-  puts ">> Writing #{path}"
+  puts "** Writing #{path}"
   File.open(path, 'w', &block)
 end
 
 def ensure_directory(path)
   return nil if File.directory?(path)
-  puts ">> Creating directory #{path}"
+  puts "** Creating directory #{path}"
   FileUtils.mkdir_p(path)  
   return true
 end
 
-puts ">> Initializing"
+puts "** Initializing"
 
 ensure_directory(ROOT / 'public' / 'javascripts')
 ensure_directory(ROOT / 'public' / 'stylesheets')
@@ -28,7 +22,7 @@ pages_new = ensure_directory(ROOT / 'pages')
 ensure_directory(ROOT / 'layouts')
 ensure_directory(ROOT / 'helpers')
 
-if pages_new || true
+if pages_new
   ensure_file(ROOT / 'pages' / 'index.html.erb') do |f|
     f.write File.read(SYSTEM / 'pages' / 'intro.html.erb')
   end

@@ -1,17 +1,4 @@
-SYSTEM  = File.dirname(__FILE__)
-ROOT    = File.expand_path(SYSTEM + '/../')
-PAGES   = File.join(ROOT, 'pages')
-LAYOUTS = File.join(ROOT, 'layouts')
-
-$:.unshift(SYSTEM)
-
-require 'yaml'
-require 'rack'
-require 'rack/request'
-require 'rack/response'
-require 'activesupport'
-require 'extensions'
-require 'erb'
+require File.join(File.dirname(__FILE__), 'boot')
 require 'init'
 
 # ApplicationProxy is simply a proxy class handler
@@ -48,5 +35,8 @@ app = Rack::Builder.new do
    run ApplicationProxy.new
 end
 
-puts ">> Starting server"
-Rack::Handler::Mongrel.run app, :Port => (ARGV.shift || 3000)
+port = ARGV.shift || 3000
+puts "** Starting bones server on http://0.0.0.0:#{port}"
+Rack::Handler::Mongrel.run app, :Port => port do |server|
+  puts "** Use CTRL-C to stop."
+end
