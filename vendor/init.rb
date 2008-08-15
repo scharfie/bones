@@ -14,18 +14,25 @@ def ensure_file(path, &block)
 end
 
 def ensure_directory(path)
-  return if File.directory?(path)
+  return nil if File.directory?(path)
   puts ">> Creating directory #{path}"
   FileUtils.mkdir_p(path)  
+  return true
 end
 
 puts ">> Initializing"
 
 ensure_directory(ROOT / 'public' / 'javascripts')
 ensure_directory(ROOT / 'public' / 'stylesheets')
-ensure_directory(ROOT / 'pages')
+pages_new = ensure_directory(ROOT / 'pages')
 ensure_directory(ROOT / 'layouts')
 ensure_directory(ROOT / 'helpers')
+
+if pages_new || true
+  ensure_file(ROOT / 'pages' / 'index.html.erb') do |f|
+    f.write File.read(SYSTEM / 'pages' / 'intro.html.erb')
+  end
+end  
 
 ensure_file(ROOT / 'layouts' / 'application.html.erb') do |f|
   f.write <<-HTML
@@ -34,14 +41,13 @@ ensure_file(ROOT / 'layouts' / 'application.html.erb') do |f|
 <html>
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <title>TITLE</title>
+  <title>Welcome to bones</title>
   <%= stylesheet_link_tag 'styles' %>
   <%= javascript_include_tag %>
 </head>  
 <body>
-  <h1>Hello</h1>
+  <h1>Welcome to <strong>bones</strong></h1>
   <%= @content_for_layout %>
-  <%= partial 'footer' %>
 </body>
 </html>  
   HTML
