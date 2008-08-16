@@ -1,3 +1,4 @@
+#!/usr/bin/ruby
 require File.join(File.dirname(__FILE__), 'boot')
 require 'fileutils'
 require 'bones'
