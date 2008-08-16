@@ -2,7 +2,7 @@ module CoreHelper
   # Returns array of tag names that can be
   # closed with /> instead of </tagname>
   def short_tag_names
-    %w(input br link hr)
+    %w(input br link hr img)
   end
 
   # Converts hash of options into a string of HTML

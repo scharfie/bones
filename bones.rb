@@ -54,7 +54,7 @@ class Bones
     
     # Initialize template with path and optional layout
     def initialize(path, layout=-1)
-      @path   = path
+      @path   = path.gsub(/\.html|\.html\.erb/, '')
       @layout = layout == -1 ? 'application' : layout
     end
     
