@@ -103,7 +103,7 @@ module CoreHelper
     end
   
     def capture_erb(*args, &block)
-      buffer = eval(ActionView::Base.erb_variable, block.binding)
+      buffer = eval('_erbout', block.binding)
       capture_erb_with_buffer(buffer, *args, &block)
     end
 
