@@ -5,6 +5,7 @@ LAYOUTS = File.join(ROOT, 'layouts')
 
 $:.unshift(SYSTEM)
 
+require 'rubygems'
 require 'yaml'
 require 'rack'
 require 'rack/request'
