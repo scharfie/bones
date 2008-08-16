@@ -10,12 +10,12 @@ class BonesProxy
   # Process incoming request
   def call(env)
     reload!
-    Application.new.call(env)  
+    Bones.new.call(env)  
   end
   
   # Reloads the application
   def reload!
-    force_load 'Bones' => 'application.rb'
+    force_load 'Bones' => 'bones.rb'
   end
 end
 

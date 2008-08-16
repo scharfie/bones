@@ -10,7 +10,7 @@ module CoreHelper
   def html_options_from_hash(options={})
     options.map do |key, value|
       %Q{#{key}="#{value}"}
-    end.join(' ')
+    end.sort.join(' ')
   end
   
   # Creates a tag with content and properties
@@ -32,16 +32,21 @@ module CoreHelper
       result << '>'
       result << arguments.join
       result << "</#{name}>"  
-    end  
+    end
+    
+    result.join('')  
   end
   
+  # Creates link tag to stylesheet(s)
+  # (options are support as the last argument)
   def stylesheet_link_tag(*sources)
-    return nil if args.empty?
+    return nil if sources.empty?
     options = Hash === sources.last ? sources.pop : {}
-    result  = args.map { |e| stylesheet_tag(e, options) }
+    result  = sources.map { |e| stylesheet_tag(e, options) }
     result.join("\n")
   end
   
+  # Creates a stylesheet link tag
   def stylesheet_tag(name, options={})
     options.reverse_merge! :href => "/stylesheets/#{name}.css",
       :rel => 'stylesheet', :type => 'text/css'
@@ -49,13 +54,16 @@ module CoreHelper
     content_tag :link, options  
   end
 
+  # Creates script tag to javascript(s)
+  # (options are support as the last argument)
   def javascript_include_tag(*sources)
-    return nil if args.empty?
+    return nil if sources.empty?
     options = Hash === sources.last ? sources.pop : {}
-    result  = args.map { |e| javascript_tag(e, options) }
+    result  = sources.map { |e| javascript_tag(e, options) }
     result.join("\n")
   end
 
+  # Creates a javascript script tag
   def javascript_tag(name, options={})
     options.reverse_merge! :src => "/javascripts/#{name}.js",
       :type => 'text/javascript'
