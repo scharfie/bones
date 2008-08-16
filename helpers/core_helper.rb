@@ -127,4 +127,13 @@ module CoreHelper
   
   include HTML
   include Capture
+  
+  # Simple helper for setting title
+  # Call from a page template with an argument 
+  # to set the title; call from the layout with
+  # no argument to get the title
+  def title(value=-1)
+    return @content_for_title if value == -1
+    @content_for_title = value
+  end
 end
