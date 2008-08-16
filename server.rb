@@ -26,13 +26,13 @@ def public_directories
       File.directory?(base / e) ? '/' + e : nil
     end.compact
   end  
-end  
+end
 
 app = Rack::Builder.new do
    use Rack::CommonLogger
    use Rack::ShowExceptions
    use Rack::Reloader
-   use Rack::Static, :urls => public_directories, :root => 'public'
+   use Rack::Static, :urls => public_directories, :root => ROOT / 'public'
    run BonesProxy.new
 end
 
