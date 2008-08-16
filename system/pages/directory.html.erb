@@ -1,5 +1,5 @@
 <ul>
-<% @files.each do |f| %>
-  <li><a href="/<%= f.gsub(/index$/, '') %>"><%= f %></a></li>
+<% pages.each do |page| %>
+  <li><a href="/<%= page.gsub(/index$/, '') %>"><%= page %></a></li>
 <% end %>
 </ul>

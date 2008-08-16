@@ -18,6 +18,15 @@ class Bones
     end    
   end
   
+  # Returns array of all pages (excluding partials)
+  def self.pages
+    Dir.chdir(PAGES) do
+      Dir.glob('**/*.html.erb').map do |f|
+        f.starts_with?('_') ? nil : f.gsub('.html.erb', '')
+      end.compact
+    end
+  end  
+  
   # Template - loads template file based on
   # request path information and compiles
   # it using ERB
@@ -53,7 +62,6 @@ class Bones
     def filename
       if @path =~ /raw$/
         layout false
-        generate_directory_listing
         path = SYSTEM / 'pages' / 'directory.html.erb'
       else
         path = PAGES / @path
@@ -62,18 +70,14 @@ class Bones
       end
     end
     
+    # Returns array of pages
+    def pages
+      Bones.pages
+    end
+    
     # Full path to layout file
     def layout_filename
       path = LAYOUTS / layout.to_s + '.html.erb'
-    end
-
-    # Returns array of all page templates (excluding partials)
-    def generate_directory_listing
-      Dir.chdir(PAGES) do
-        @files = Dir.glob('**/*.html.erb').map do |f|
-          f.starts_with?('_') ? nil : f.gsub('.html.erb', '')
-        end.compact
-      end
     end
     
     # Gets/sets layout
