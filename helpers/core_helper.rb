@@ -52,7 +52,8 @@ module CoreHelper
   
     # Creates a stylesheet link tag
     def stylesheet_tag(name, options={})
-      options.reverse_merge! :href => "/stylesheets/#{name}.css",
+      name += '.css' unless name =~ /\./
+      options.reverse_merge! :href => "/stylesheets/#{name}",
         :rel => 'stylesheet', :type => 'text/css'
       
       content_tag :link, options  
@@ -63,16 +64,16 @@ module CoreHelper
     def javascript_include_tag(*sources)
       return nil if sources.empty?
       options = Hash === sources.last ? sources.pop : {}
-      result  = sources.map { |e| javascript_tag(e, options) }
-      result.join("\n")
+      sources.collect { |e| javascript_tag(e, options) }.join("\n")
     end
 
     # Creates a javascript script tag
     def javascript_tag(name, options={})
-      options.reverse_merge! :src => "/javascripts/#{name}.js",
+      name += '.js' unless name =~ /\./
+      options.merge! :src => "/javascripts/#{name}",
         :type => 'text/javascript'
       
-      content_tag :script, options  
+      content_tag :script, options 
      end
   end
   
