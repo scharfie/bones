@@ -6,18 +6,18 @@ require 'bones'
 # Set destination
 destination = ROOT / 'public'
 
-def public_directories_regex
-  @regex ||= Regexp.new(public_directories.join('|'))
-end
+# Set the base URL from first argument
+base = ARGV.shift || ''
 
-def normalize_url(path)
+def normalize_url(path, base='')
   @known_pairs ||= {}
+  @public_directories_regex ||= Regexp.new(public_directories.join('|'))
   
   if v = @known_pairs[path]
     return v
   else
     value = case
-    when path =~ public_directories_regex
+    when path =~ @public_directories_regex
       path
     when File.directory?('pages' / path)
       path
@@ -25,7 +25,7 @@ def normalize_url(path)
       path + '.html'
     end
     
-    @known_pairs[path] = value
+    @known_pairs[path] = base / value
   end    
 end
 
@@ -35,12 +35,10 @@ Dir.chdir(ROOT) do
     puts  "** Generating #{page}.html"
     result = Bones::Template.compile(page)
     result.gsub!(/(href|src|action)="([-A-Za-z0-9_.\/]+)(.*)"/) do |match|
-      property, url, params = $1, normalize_url(original_url = $2), $3
+      property, url, params = $1, normalize_url(original_url = $2, base), $3
       # puts "%40s => %40s" % [original_url, url]
       '%s="%s%s"' % [property, url, params]
     end
-  
-    # puts result
   
     path   = destination / page + '.html'
     FileUtils.mkdir_p(File.dirname(path))
