@@ -13,3 +13,12 @@ require 'rack/response'
 require 'activesupport'
 require 'extensions'
 require 'erb'
+
+def public_directories
+  Dir.chdir(base = ROOT / 'public') do
+    Dir.entries(base).map do |e|
+      next if e =~ /^\.+$/ 
+      File.directory?(base / e) ? '/' + e : nil
+    end.compact
+  end  
+end
