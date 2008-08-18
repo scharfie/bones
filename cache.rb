@@ -17,6 +17,9 @@ def normalize_url(path)
     return v
   else
     value = case
+    # skip external URLs
+    when path =~ /(\w+):\/\//
+      return path
     when path =~ public_directories_regex
       path
     when File.directory?('pages' / path)
@@ -36,7 +39,7 @@ Dir.chdir(ROOT) do
     result = Bones::Template.compile(page)
     result.gsub!(/(href|src|action)="([-A-Za-z0-9_.\/]+)(.*)"/) do |match|
       property, url, params = $1, normalize_url(original_url = $2), $3
-      # puts "%40s => %40s" % [original_link, link]
+      puts "%40s => %40s" % [original_link, link]
       '%s="%s%s"' % [property, url, params]
     end
   
