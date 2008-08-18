@@ -36,7 +36,7 @@ Dir.chdir(ROOT) do
     result = Bones::Template.compile(page)
     result.gsub!(/(href|src|action)="([-A-Za-z0-9_.\/]+)(.*)"/) do |match|
       property, url, params = $1, normalize_url(original_url = $2), $3
-      puts "%40s => %40s" % [original_url, url]
+      # puts "%40s => %40s" % [original_url, url]
       '%s="%s%s"' % [property, url, params]
     end
   
