@@ -30,6 +30,7 @@ end
 
 port = ARGV.shift || 3000
 puts "** Starting bones server on http://0.0.0.0:#{port}"
+puts "** Public directories: #{public_directories.to_sentence}"
 Rack::Handler::Mongrel.run app, :Port => port do |server|
   puts "** Use CTRL-C to stop."
 end

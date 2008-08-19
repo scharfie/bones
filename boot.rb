@@ -14,11 +14,19 @@ require 'activesupport'
 require 'extensions'
 require 'erb'
 
-def public_directories
-  Dir.chdir(base = ROOT / 'public') do
+def directories(base)
+  Dir.chdir(base) do
     Dir.entries(base).map do |e|
       next if e =~ /^\.+$/ 
       File.directory?(base / e) ? '/' + e : nil
     end.compact
   end  
+end
+
+def page_directories
+  directories(ROOT / 'pages')
+end
+
+def public_directories
+  directories(ROOT / 'public') - page_directories  
 end
