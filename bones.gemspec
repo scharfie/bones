@@ -2,18 +2,33 @@ Gem::Specification.new do |s|
   s.name     = "bones"
   s.version  = "0.1.0"
   s.date     = "2008-08-22"
-  s.summary  = ""
+  s.summary  = "Simple HTML mockup framework for designers using ERB"
   s.email    = "scharfie@gmail.com"
   s.homepage = "http://github.com/scharfie/bones"
-  s.description = ""
+  s.description = s.summary
   s.has_rdoc = true
   s.authors  = ["Chris Scharf", "Ryan Heath"]
-  s.files    = [
-    'lib/bones/bones.rb'
-	]
-  # s.rdoc_options = ["--main", "README.txt"]
-  # s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
+	
+  s.default_executable = "bones"
+  s.executables        = %W(bones)
   
   s.add_dependency("rack", [">= 0.3.0"])
   s.add_dependency("activesupport", [">= 2.1.0"])
+
+  s.files    = <<-FILES.split("\n").map { |e| e.strip }
+    bin/bones
+    lib/bones.rb
+    lib/boot.rb
+    lib/cache.rb
+    lib/extensions.rb
+    lib/helpers
+    lib/helpers/core_helper.rb
+    lib/init.rb
+    lib/pages/directory.html.erb
+    lib/pages/intro.html.erb
+    lib/Rakefile
+    lib/README
+    lib/server.rb
+    lib/tasks.rb
+  FILES
 end

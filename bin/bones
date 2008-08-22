@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+puts "Hello!  You gave me this crap: "
+puts ARGV.inspect
