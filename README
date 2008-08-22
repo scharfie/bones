@@ -1,0 +1,38 @@
+Bones, the simple HTML mockup framework.
+
+What it does:
+
+  - Provides a simple framework for creating views
+    without worrying about controllers
+  - Allows the building of a complete static website
+    out of views, partials, and layouts which can
+    then be combined into full HTML pages for deployment
+    onto ANY webserver.
+
+Requirements:
+
+  - ActiveSupport
+  - rack
+
+Starting it up:
+
+	- Install
+	  gem install bones -s http://gems.github.com
+
+	- Generate:
+	  bones my_bones_app
+	  cd my_bones_app
+ 
+  - Serve
+    rake server
+ 
+  - Browse:
+    http://localhost:3000
+  
+Flatten your views into .html files:
+
+	- Cache with our without versioning
+    rake cache:simple     # without versioning
+    rake cache:versioned  # with versioning
+
+  Then upload the entire public/ directory to your server.
