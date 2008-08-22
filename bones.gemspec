@@ -28,7 +28,8 @@ Gem::Specification.new do |s|
     'lib/pages/intro.html.erb',
     'lib/Rakefile',
     'lib/server.rb',
-    'lib/tasks/bones.rb'
+    'lib/tasks/bones.rb',
+    'bones.gemspec'
   ]
 
   s.add_dependency("rack", [">= 0.3.0"])
