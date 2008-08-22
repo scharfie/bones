@@ -33,7 +33,7 @@ Starting it up:
   
 Flatten your views into .html files:
 
-	- Cache with our without versioning
+	- Cache
     rake cache:simple     # without versioning
     rake cache:versioned  # with versioning
 
