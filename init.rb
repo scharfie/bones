@@ -52,7 +52,7 @@ ensure_file(ROOT / 'public' / 'stylesheets' / 'styles.css')
 puts <<-HELP if __FILE__ == $0
 
  All set! Now just run:
-   rake server
+   ruby bones/server.rb
  
  The app will run on port 3000
  
