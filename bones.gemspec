@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.add_dependency("activesupport", [">= 2.1.0"])
 
   s.files    = <<-FILES.split("\n").map { |e| e.strip }
+    README
     bin/bones
     lib/bones.rb
     lib/boot.rb
@@ -28,7 +29,6 @@ Gem::Specification.new do |s|
     lib/pages/directory.html.erb
     lib/pages/intro.html.erb
     lib/Rakefile
-    lib/README
     lib/server.rb
     lib/tasks/bones.rb
   FILES
