@@ -49,10 +49,15 @@ end
 
 ensure_file(ROOT / 'public' / 'stylesheets' / 'styles.css')
 
+puts "** Adding Rakefile to parent directory"
+ensure_file(ROOT / 'Rakefile') do |f|
+  f.write File.read(SYSTEM / 'Rakefile.parent')
+end
+
 puts <<-HELP if __FILE__ == $0
 
  All set! Now just run:
-   ruby bones/server.rb
+   rake server
  
  The app will run on port 3000
  
