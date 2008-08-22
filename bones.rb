@@ -125,7 +125,7 @@ class Bones
     # so <%= partial 'footer' %> will render
     # the '_footer.html.erb' template.
     def partial(name, options={})
-      path = name.split('/')
+      path = name.to_s.split('/')
       path[-1] = '_' + path.last unless path.last.starts_with?('_')
       name = path.join('/')
       Template.compile(name, false, options)
