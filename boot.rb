@@ -14,6 +14,7 @@ require 'rack/response'
 require 'activesupport'
 require 'extensions'
 require 'erb'
+require 'bones'
 
 def directories(base)
   Dir.chdir(base) do
@@ -29,5 +30,5 @@ def page_directories
 end
 
 def public_directories
-  directories(ROOT / 'public') - page_directories  
+  directories(ROOT / 'public') - page_directories - Bones::Versioned.directories
 end
