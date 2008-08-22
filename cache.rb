@@ -3,11 +3,13 @@ require File.join(File.dirname(__FILE__), 'boot')
 require 'fileutils'
 require 'bones'
 
-# Set destination
-destination = ROOT / 'public'
+destination = ROOT / 'public'                     # Set original destination
+versioned   = Bones::Versioned.new(destination)   # Allow versioning if desired
+argv        = ARGV.shift                          # The first argument
+base        = ''                                  # Ensuring 'base' is not nil
 
-# Set the base URL from first argument
-base = ARGV.shift || ''
+wants_versioning = !!(argv == '--versioned')      # Cache a new version?
+wants_versioning ? destination = versioned.destination : base = argv.to_s
 
 def normalize_url(path, base='')
   @known_pairs ||= {}
@@ -40,10 +42,11 @@ Dir.chdir(ROOT) do
       '%s="%s%s"' % [property, url, params]
     end
   
-    path   = destination / page + '.html'
+    path = destination / page + '.html'
     FileUtils.mkdir_p(File.dirname(path))
     File.open(path, 'w') { |f| f.write(result) }
   end
+  versioned.copy_public_directories if wants_versioning
 end
 
 puts "** Done."

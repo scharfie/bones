@@ -131,4 +131,52 @@ class Bones
       Template.compile(name, false, options)
     end
   end
+  
+  # Class used to encapsulate the logic needed to
+  # maintain mockup versions
+  class Versioned
+    # Pre-fix used for versioned directories
+    DIR_PREFIX = 'v'
+    
+    # Start with the original destination
+    def initialize(original_destination)
+      @original_destination = original_destination
+      @versioned_destination = nil
+    end
+    
+    # Returns the new destination, which depends on
+    # the existing amount of 'versions'
+    def destination      
+      @versioned_destination ||= get_versioned_destination
+    end
+    
+    # Transfers all public directories to the new 'versioned'
+    # directory, so each version can contain it's own mockup
+    # (note: only copies asset directories - ignores "v1", "v2", etc)
+    def copy_public_directories
+      public_directories.each do |src|
+        FileUtils.copy_entry ROOT / 'public' / src, destination / src
+      end
+    end
+    
+    # Returns the versioned directories within the 'public' folder
+    # $> Bones::Versioned.directories
+    # $> => ["/v1", "/v2", ... "/vN"]
+    def self.directories
+      Dir.glob(ROOT / 'public' / "#{DIR_PREFIX}**").inject([]) do |dirs, dir|
+        dirs << '/' + dir.gsub(/^\/.+\//, '')
+      end
+    end
+
+    private
+      # increments to the next version based on existing versions
+      def next_version
+        (self.class.directories.size + 1).to_s
+      end
+      
+      # constructs the next version path
+      def get_versioned_destination
+        @original_destination /= DIR_PREFIX + next_version
+      end
+  end
 end
