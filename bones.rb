@@ -150,7 +150,7 @@ class Bones
       @versioned_destination ||= get_versioned_destination
     end
     
-    # Transfers all public directories to the new 'versioned'
+    # Copies all public directories to the new 'versioned'
     # directory, so each version can contain it's own mockup
     # (note: only copies asset directories - ignores "v1", "v2", etc)
     def copy_public_directories
