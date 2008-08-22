@@ -167,16 +167,27 @@ class Bones
         dirs << '/' + dir.gsub(/^\/.+\//, '')
       end
     end
+    
+    # Public accessor of version
+    def version
+      next_version
+    end
+    
+    # Returns directory name of versioned path
+    # For example, 'v1'
+    def versioned_directory_name
+      DIR_PREFIX + next_version
+    end
 
-    private
-      # increments to the next version based on existing versions
-      def next_version
-        (self.class.directories.size + 1).to_s
-      end
-      
-      # constructs the next version path
-      def get_versioned_destination
-        @original_destination /= DIR_PREFIX + next_version
-      end
+  private
+    # increments to the next version based on existing versions
+    def next_version
+      (self.class.directories.size + 1).to_s
+    end
+    
+    # constructs the next version path
+    def get_versioned_destination
+      @original_destination /= versioned_directory_name
+    end
   end
 end
