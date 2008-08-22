@@ -4,10 +4,19 @@ task :server do
   load File.join(File.dirname(__FILE__), 'server.rb')
 end
 
-desc "Cache page templates for redistribution"
-task :cache do
-  ARGV.shift
-  load File.join(File.dirname(__FILE__), 'cache.rb')
+namespace :cache do
+  desc "Cache page templates for redistribution (non-versioned)"
+  task :simple do
+    ARGV.shift
+    load File.join(File.dirname(__FILE__), 'cache.rb')
+  end
+  
+  desc "Cache page templatets for redistribution (versioned)"
+  task :versioned do
+    ARGV.shift
+    file = File.join(File.dirname(__FILE__), 'cache.rb')
+    system "ruby #{file} '--versioned'"
+  end
 end
 
 task :clean do
