@@ -52,7 +52,7 @@ ensure_file(ROOT / 'public' / 'stylesheets' / 'styles.css')
 puts <<-HELP if __FILE__ == $0
 
  All set! Now just run:
-   ruby vendor/server.rb
+   rake server
  
  The app will run on port 3000
  
