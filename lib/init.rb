@@ -51,8 +51,8 @@ class BonesInitializer
 
     ensure_file(ROOT / 'public' / 'stylesheets' / 'styles.css')
 
-    puts "** Adding Rakefile to parent directory"
     ensure_file(ROOT / 'Rakefile') do |f|
+      puts "** Adding Rakefile to parent directory"
       f.write File.read(SYSTEM / 'Rakefile')
     end
 

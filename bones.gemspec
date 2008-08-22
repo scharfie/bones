@@ -2,13 +2,14 @@ Gem::Specification.new do |s|
   s.name        = "bones"
   s.version     = "0.1.1"
   s.date        = "2008-08-22"
+  s.authors     = ["Chris Scharf", "Ryan Heath"]
 
+  s.email       = "scharfie@gmail.com"
   s.summary     = "Simple HTML mockup framework for designers using ERB"
   s.description = "Simple HTML mockup framework for designers using ERB"
-  s.email       = "scharfie@gmail.com"
   s.homepage    = "http://github.com/scharfie/bones"
+  
   s.has_rdoc    = false
-  s.authors     = ["Chris Scharf", "Ryan Heath"]
 	
   s.require_paths      = ['lib']	
   s.default_executable = 'bones'
@@ -16,6 +17,7 @@ Gem::Specification.new do |s|
   
   s.files = [ 
     'README',
+    'lib/Rakefile',
     'bin/bones',
     'lib/bones.rb',
     'lib/boot.rb',
@@ -26,7 +28,6 @@ Gem::Specification.new do |s|
     'lib/init.rb',
     'lib/pages/directory.html.erb',
     'lib/pages/intro.html.erb',
-    'lib/Rakefile',
     'lib/server.rb',
     'lib/tasks/bones.rb',
     'bones.gemspec'
