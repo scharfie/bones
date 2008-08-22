@@ -16,20 +16,20 @@ Gem::Specification.new do |s|
   s.add_dependency("rack", [">= 0.3.0"])
   s.add_dependency("activesupport", [">= 2.1.0"])
 
-  s.files    = <<-FILES.split("\n").map { |e| e.strip }
-    README
-    bin/bones
-    lib/bones.rb
-    lib/boot.rb
-    lib/cache.rb
-    lib/extensions.rb
-    lib/helpers
-    lib/helpers/core_helper.rb
-    lib/init.rb
-    lib/pages/directory.html.erb
-    lib/pages/intro.html.erb
-    lib/Rakefile
-    lib/server.rb
-    lib/tasks/bones.rb
-  FILES
+  s.files = [ 
+    'README',
+    'bin/bones',
+    'lib/bones.rb',
+    'lib/boot.rb',
+    'lib/cache.rb',
+    'lib/extensions.rb',
+    'lib/helpers',
+    'lib/helpers/core_helper.rb',
+    'lib/init.rb',
+    'lib/pages/directory.html.erb',
+    'lib/pages/intro.html.erb',
+    'lib/Rakefile',
+    'lib/server.rb',
+    'lib/tasks/bones.rb'
+  ]
 end
