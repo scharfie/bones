@@ -33,6 +33,7 @@ class Bones
   class Template
     attr_accessor :path
     attr_accessor :layout
+    attr_accessor :options
     
     # Load all available helpers
     def self.include_helpers
@@ -53,9 +54,10 @@ class Bones
     include_helpers
     
     # Initialize template with path and optional layout
-    def initialize(path, layout=-1)
-      @path   = path.gsub(/\.html|\.html\.erb/, '')
-      @layout = layout == -1 ? 'application' : layout
+    def initialize(path, layout=-1, options={})
+      @path    = path.gsub(/\.html|\.html\.erb/, '')
+      @layout  = layout == -1 ? 'application' : layout
+      @options = options
     end
     
     # Full path to template file
@@ -92,8 +94,9 @@ class Bones
     # Compiles the template (along with the layout
     # if necessary)
     def compile
-      erb = ERB.new(File.read(filename))
-      @content_for_layout = erb.result(binding)
+      src = ERB.new(File.read(filename)).src
+      src = (local_assigns_source || '') + (src || '')
+      @content_for_layout = eval(src) # erb.result(binding)
       
       if layout
         erb = ERB.new(File.read(layout_filename))
@@ -101,6 +104,15 @@ class Bones
       else
         @content_for_layout
       end  
+    end
+    
+    # Generates source for local variable assignments
+    def local_assigns_source
+      src = []
+      (options[:locals] || {}).each do |key, value|
+        src << "#{key} = #{value.inspect};\n"
+      end
+      src.join
     end
     
     # Short-hand for compiling a template
@@ -112,8 +124,11 @@ class Bones
     # is automatically added to the passed name,
     # so <%= partial 'footer' %> will render
     # the '_footer.html.erb' template.
-    def partial(name)
-      Template.compile("_#{name}", false)
+    def partial(name, options={})
+      path = name.split('/')
+      path[-1] = '_' + path.last unless path.last.starts_with?('_')
+      name = path.join('/')
+      Template.compile(name, false, options)
     end
   end
 end

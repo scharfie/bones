@@ -4,6 +4,7 @@ PAGES   = File.join(ROOT, 'pages')
 LAYOUTS = File.join(ROOT, 'layouts')
 
 $:.unshift(SYSTEM)
+$:.unshift(File.join(ROOT, 'lib'))
 
 require 'rubygems'
 require 'yaml'
