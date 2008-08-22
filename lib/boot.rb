@@ -1,5 +1,5 @@
 SYSTEM  = File.dirname(__FILE__)
-ROOT    = File.expand_path(SYSTEM + '/../')
+ROOT    = File.expand_path('.') unless Object.const_defined?(:ROOT)
 PAGES   = File.join(ROOT, 'pages')
 LAYOUTS = File.join(ROOT, 'layouts')
 

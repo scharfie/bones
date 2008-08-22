@@ -6,9 +6,10 @@ Gem::Specification.new do |s|
   s.email    = "scharfie@gmail.com"
   s.homepage = "http://github.com/scharfie/bones"
   s.description = s.summary
-  s.has_rdoc = true
+  s.has_rdoc = false
   s.authors  = ["Chris Scharf", "Ryan Heath"]
 	
+  s.require_paths = ["lib"]	
   s.default_executable = "bones"
   s.executables        = %W(bones)
   
@@ -29,6 +30,6 @@ Gem::Specification.new do |s|
     lib/Rakefile
     lib/README
     lib/server.rb
-    lib/tasks.rb
+    lib/tasks/bones.rb
   FILES
 end

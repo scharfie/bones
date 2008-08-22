@@ -1,4 +1,22 @@
 #!/usr/bin/env ruby
+# $:.unshift(File.dirname(__FILE__) + '/../')
+require 'fileutils'
 
-puts "Hello!  You gave me this crap: "
-puts ARGV.inspect
+path = ARGV.shift
+
+if path.nil?
+  puts "Please supply a path to create a bones application."
+  exit
+end
+
+# Ensure given path exists
+path = File.expand_path(path)
+FileUtils.mkdir(path) unless File.directory?(path)
+
+# Set the root to the path
+ROOT = path
+
+require 'boot.rb'
+require 'init.rb'
+
+BonesInitializer.run

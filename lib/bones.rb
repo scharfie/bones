@@ -51,7 +51,7 @@ class Bones
     end
     
     # Load the helpers
-    include_helpers
+    include_helpers if Object.const_defined?(:SYSTEM)
     
     # Initialize template with path and optional layout
     def initialize(path, layout=-1, options={})
