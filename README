@@ -17,7 +17,7 @@ Requirements:
 Starting it up:
 
 	- Install
-	  gem install bones -s http://gems.github.com
+	  gem install scharfie-bones -s http://gems.github.com
 
 	- Generate:
 	  bones my_bones_app
