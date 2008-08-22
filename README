@@ -22,7 +22,7 @@ Starting it up:
 	- Generate:
 	  bones my_bones_app
 	  cd my_bones_app
- 
+
   - Serve
     rake server
  
@@ -31,8 +31,8 @@ Starting it up:
   
 Flatten your views into .html files:
 
-	- Cache with our without versioning
+	- Cache
     rake cache:simple     # without versioning
     rake cache:versioned  # with versioning
 
-  Then upload the entire public/ directory to your server.
+Then upload the entire public/ directory to your server.

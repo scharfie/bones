@@ -29,6 +29,10 @@ def page_directories
   directories(ROOT / 'pages')
 end
 
+def versioned_directories
+  Bones::Versioned.directories
+end
+
 def public_directories
-  directories(ROOT / 'public') - page_directories - Bones::Versioned.directories
+  directories(ROOT / 'public') - page_directories - versioned_directories
 end
