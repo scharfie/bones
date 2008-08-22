@@ -9,6 +9,9 @@ argv        = ARGV.shift                          # The first argument
 base        = ''                                  # Ensuring 'base' is not nil
 
 wants_versioning = !!(argv == '--versioned')      # Cache a new version?
+
+# If versioning is desired, update the destination with the
+# versioned destination; otherwise, set the 'base' URL to the first argument
 wants_versioning ? destination = versioned.destination : base = argv.to_s
 
 def normalize_url(path, base='')
