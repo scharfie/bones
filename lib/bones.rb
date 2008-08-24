@@ -130,7 +130,9 @@ class Bones
       path = name.to_s.split('/')
       path[-1] = '_' + path.last unless path.last.starts_with?('_')
       name = path.join('/')
-      Template.compile(name, false, options)
+      template = Template.new(name, false, options)
+      template.request = request
+      template.compile
     end
   end
   
