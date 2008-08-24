@@ -10,6 +10,7 @@ class Bones
     # Create a new template for the given path
     # and compile it
     template = Template.new(request.path_info)
+    template.request = request
     output   = template.compile
 
     # Build a rack response
@@ -34,6 +35,7 @@ class Bones
     attr_accessor :path
     attr_accessor :layout
     attr_accessor :options
+    attr_accessor :request
     
     # Load all available helpers
     def self.include_helpers
