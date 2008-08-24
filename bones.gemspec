@@ -3,8 +3,8 @@ Gem::Specification.new do |s|
   s.version     = "0.1.1"
   s.date        = "2008-08-22"
   s.authors     = ["Chris Scharf", "Ryan Heath"]
-
   s.email       = "scharfie@gmail.com"
+
   s.summary     = "Simple HTML mockup framework for designers using ERB"
   s.description = "Simple HTML mockup framework for designers using ERB"
   s.homepage    = "http://github.com/scharfie/bones"
