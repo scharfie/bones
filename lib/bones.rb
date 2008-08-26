@@ -60,6 +60,12 @@ class Bones
       @path    = path.gsub(/\.html|\.html\.erb/, '')
       @layout  = layout == -1 ? 'application' : layout
       @options = options
+      
+      self.class.include_helpers
+    end
+    
+    def inspect
+      '#<Bones::Template @path="%s" @layout="%s">' % [path, layout]
     end
     
     # Full path to template file

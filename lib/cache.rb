@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 require File.join(File.dirname(__FILE__), 'boot')
 require 'fileutils'
 require 'bones'
@@ -79,13 +79,19 @@ def normalize_url(path, base='')
   end    
 end
 
+def generate_mock_request(options={})
+  OpenStruct.new(options)
+end
+
 version = options.versioned? ? options.versioned.versioned_directory_name : nil
 
 # Process each page
 Dir.chdir(ROOT) do
   Bones.pages.each do |page|
     puts  "** Generating #{[version, page].compact.join('/')}.html"
-    result = Bones::Template.compile(page)
+    template = Bones::Template.new(page)
+    template.request = generate_mock_request(:path_info => page)
+    result = template.compile
     result.gsub!(/(href|src|action)="([-A-Za-z0-9_\.\/]+)(.*?)"/) do |match|
       property, url, params = $1, normalize_url(original_url = $2, options.base), $3
       '%s="%s%s"' % [property, url, params]
