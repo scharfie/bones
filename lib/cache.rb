@@ -94,9 +94,9 @@ Dir.chdir(ROOT) do
     template = Bones::Template.new(page)
     template.request = generate_mock_request(:path_info => page)
     result = template.compile
-    result.gsub!(/(href|src|action)="([-A-Za-z0-9_\.\/]+)(.*?)"/) do |match|
-      property, url, params = $1, normalize_url(original_url = $2, options.base), $3
-      '%s="%s%s"' % [property, url, params]
+    result.gsub!(/(href|src|action|url)(="|\()([-A-Za-z0-9_\.\/]+)(.*?)("|\))/) do |match|
+      property, url, params = $1, normalize_url(original_url = $3, options.base), $4
+      property =~ /url/ ? 'url(%s%s)' % [url, params] : '%s="%s%s"' % [property, url, params]
     end
   
     path = options.destination / page + '.html'
