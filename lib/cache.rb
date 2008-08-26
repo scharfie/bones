@@ -71,6 +71,8 @@ def normalize_url(path, base='')
       path
     when File.directory?('pages' / path)
       path
+    when path =~ /^mailto/
+      return path  
     else
       path + '.html'
     end
