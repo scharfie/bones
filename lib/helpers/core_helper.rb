@@ -137,4 +137,9 @@ module CoreHelper
     return @content_for_title if value == -1
     @content_for_title = value
   end
+  
+  def base
+    return Object.const_get(:BASE_URL) if Object.const_defined?(:BASE_URL)
+    return ''
+  end
 end
