@@ -27,7 +27,7 @@ class CacheOptions < OpenStruct
       
       o.on('--base PATH', "Change the base URL path") do |path|
         options.base = path
-        BASE_URL = path
+        Bones.base = path
       end
 
       o.on_tail("-h", "--help", "Show this message") do

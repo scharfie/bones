@@ -2,6 +2,15 @@
 # which BonesProxy loads and calls upon to
 # do the dirty work.
 class Bones
+  class << self
+    attr_accessor :base
+    
+    def base
+      @base || ''
+    end
+  end
+  
+  
   # Process incoming request (for real this time!)
   def call(env)
     # Grab the request
