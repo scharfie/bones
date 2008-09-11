@@ -15,6 +15,7 @@ require 'activesupport'
 require 'extensions'
 require 'erb'
 require 'bones'
+require 'bones/release'
 
 def directories(base)
   Dir.chdir(base) do
@@ -30,7 +31,7 @@ def page_directories
 end
 
 def versioned_directories
-  Bones::Versioned.directories
+  Bones::VersionedRelease.directories
 end
 
 def public_directories

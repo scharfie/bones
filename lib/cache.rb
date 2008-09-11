@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 require File.join(File.dirname(__FILE__), 'boot')
 require 'fileutils'
-require 'bones'
 require 'optparse'
 require 'ostruct'
 
@@ -11,7 +10,7 @@ class CacheOptions < OpenStruct
   def self.default_options
     returning new do |o|
       o.destination = ROOT / 'public'  # Set original destination
-      o.versioned   = false            # No versions by default       
+      o.release     = nil
       o.base        = ''               # Base URL is empty
     end
   end
@@ -21,15 +20,20 @@ class CacheOptions < OpenStruct
     options = default_options
     
     OptionParser.new do |o|
+      o.on('--destination PATH', '-d PATH', "Change the destination directory") do |path|
+        options.release = Bones::Release.new(options.destination, path)
+        options.destination = options.release.destination
+      end
+      
       o.on('--versioned', '--versions', "Enable versioning") do
-        options.versioned   = Bones::Versioned.new(options.destination)
+        options.release = Bones::VersionedRelease.new(options.destination)
+        options.destination = options.release.destination
       end
       
       o.on('--base PATH', "Change the base URL path") do |path|
-        options.base = path
-        Bones.base = path
+        options.base = Bones.base = path
       end
-
+      
       o.on_tail("-h", "--help", "Show this message") do
         puts o
         exit
@@ -41,12 +45,16 @@ class CacheOptions < OpenStruct
   
   # Returns true if the versions enabled
   def versioned?
-    versioned != false
+    Bones::VersionedRelease === release
+  end
+  
+  def release?
+    !release.nil?
   end
   
   # Returns destination
   def destination
-    versioned? ?  versioned.destination : super
+    release? ? release.destination : super
   end
 end
 
@@ -86,7 +94,7 @@ def generate_mock_request(options={})
   OpenStruct.new(options)
 end
 
-version = options.versioned? ? options.versioned.versioned_directory_name : nil
+version = options.versioned? ? options.release.versioned_directory_name : nil
 
 # Process each page
 Dir.chdir(ROOT) do
@@ -104,9 +112,9 @@ Dir.chdir(ROOT) do
     File.open(path, 'w') { |f| f.write(result) }
   end
 
-  if options.versioned?  
+  if options.release?  
     puts "** Copying public files"
-    options.versioned.copy_public_directories
+    options.release.copy_public_directories
   end  
 end
 
