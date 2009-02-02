@@ -1,3 +1,7 @@
+require File.join(File.dirname(__FILE__), '..', 'cache.rb')
+
+task :default => :server
+
 desc "Start bones server"
 task :server do
   ARGV.shift
@@ -5,18 +9,29 @@ task :server do
   BonesServer.run
 end
 
+desc "Cache page templates for redistribution (non-versioned)"
+task :cache => 'cache:simple'
+
 namespace :cache do
-  desc "Cache page templates for redistribution (non-versioned)"
+  def generate_options_from_environment(extra={})
+    returning Bones::Cache::Options.new do |options|
+      options.base = ENV['BASE'] if ENV['BASE']
+      options.destination = ENV['DESTINATION'] if ENV['DESTINATION']
+      extra.each do |k, v|
+        options.send("#{k}=", v)
+      end  
+    end  
+  end
+  
   task :simple do
-    ARGV.shift
-    load File.join(File.dirname(__FILE__), '..', 'cache.rb')
+    options = generate_options_from_environment
+    Bones::Cache.run(options)
   end
   
   desc "Cache page templatets for redistribution (versioned)"
   task :versioned do
-    ARGV.shift
-    file = File.join(File.dirname(__FILE__), '..', 'cache.rb')
-    system "ruby #{file} '--versioned'"
+    options = generate_options_from_environment(:versioned => true)
+    Bones::Cache.run(options)
   end
 end
 

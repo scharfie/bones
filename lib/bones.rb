@@ -10,7 +10,6 @@ class Bones
     end
   end
   
-  
   # Process incoming request (for real this time!)
   def call(env)
     # Grab the request
