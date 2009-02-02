@@ -6,7 +6,7 @@ require 'ostruct'
 
 class Bones
   class Cache
-    class Options #< OpenStruct
+    class Options
       attr_accessor :base, :versioned, :release, :destination
       
       def initialize
@@ -14,6 +14,13 @@ class Bones
         self.base        = ''               # Base URL is empty
         self.release     = nil
         self.destination = ROOT / 'public'  # Set original destination
+      end
+      
+      def merge(options={})
+        options.each do |k, v|
+          method = "#{k}=".to_sym
+          send(method, v) if respond_to?(method)
+        end
       end
   
       # Process arguments
@@ -86,7 +93,8 @@ class Bones
       # Process each page
       Dir.chdir(ROOT) do
         puts "** Writing to: #{options.destination}"
-        puts "** Using base: #{options.base}"
+        puts "** Using base: #{options.base}" unless options.base.blank?
+        
         Bones.pages.each do |page|
           puts  "** Generating #{[version, page].compact.join('/')}.html"
           template = Bones::Template.new(page)
@@ -107,7 +115,7 @@ class Bones
         end
   
         puts "** Cached to: #{options.destination}" 
-        puts "** Using base: #{options.base}" 
+        puts "** Using base: #{options.base}" unless options.base.blank?
       end
 
       puts "** Done."      
@@ -128,14 +136,12 @@ class Bones
         return v
       else
         value = case
-        when path =~ /^\w{3,}:\/\//
+        when path =~ /^(\w{3,}:\/\/|mailto)/
           return path
         when path =~ @public_directories_regex
           path
         when File.directory?('pages' / path)
           path
-        when path =~ /^mailto/
-          return path  
         else
           path + '.html'
         end

@@ -17,9 +17,7 @@ namespace :cache do
     returning Bones::Cache::Options.new do |options|
       options.base = ENV['BASE'] if ENV['BASE']
       options.destination = ENV['DESTINATION'] if ENV['DESTINATION']
-      extra.each do |k, v|
-        options.send("#{k}=", v)
-      end  
+      options.merge extra
     end  
   end
   
