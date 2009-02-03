@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "bones"
-  s.version     = "0.1.2"
+  s.version     = "0.1.3"
   s.date        = "2009-02-02"
   s.authors     = ["Chris Scharf", "Ryan Heath"]
   s.email       = "scharfie@gmail.com"
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
     'lib/Rakefile',
     'bin/bones',
     'lib/bones.rb',
+    'lib/bones/release.rb',
     'lib/boot.rb',
     'lib/cache.rb',
     'lib/extensions.rb',
