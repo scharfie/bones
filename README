@@ -17,16 +17,20 @@ Requirements:
 Starting it up:
 
 	- Install
+
 	  sudo gem install scharfie-bones -s http://gems.github.com
 
 	- Generate:
+
 	  bones my_bones_app
 	  cd my_bones_app
 
   - Serve
+
     rake server
  
   - Browse:
+
     http://localhost:3000
   
 Flatten your views into .html files:
@@ -36,3 +40,14 @@ Flatten your views into .html files:
     rake cache:versioned  # with versioning
 
 Then upload the entire public/ directory to your server.
+
+Advanced features:
+
+  - Use a base URL path when caching
+    (for example, you need to deploy to example.com/mybonesapp)
+
+    rake cache BASE=/mybonesapp
+
+  - Use custom cache directory
+
+    rake cache DESTINATION=/some/other/path
