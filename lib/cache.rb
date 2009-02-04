@@ -13,7 +13,6 @@ class Bones
         super
         self.base        = ''               # Base URL is empty
         self.release     = nil
-        self.destination = ROOT / 'public'  # Set original destination
       end
       
       def merge(options={})
@@ -58,8 +57,17 @@ class Bones
       end
       
       def destination=(path)
-        @release = Bones::Release.new(@destination, path)
-        @destination = release.destination
+        if File.expand_path(path) == default_destination
+          @release = nil
+          @destination = default_destination
+        else  
+          @release = Bones::Release.new(@destination, path)
+          @destination = release.destination
+        end  
+      end
+      
+      def default_destination
+        File.expand_path(ROOT / 'public')
       end
   
       # Returns true if the versions enabled
@@ -73,7 +81,8 @@ class Bones
   
       # Returns destination
       def destination
-        release? ? release.destination : super
+        return release.destination if release?
+        @destination ||= default_destination
       end
     end
     

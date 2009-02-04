@@ -15,8 +15,8 @@ task :cache => 'cache:simple'
 namespace :cache do
   def generate_options_from_environment(extra={})
     returning Bones::Cache::Options.new do |options|
-      options.base = ENV['BASE'] if ENV['BASE']
-      options.destination = ENV['DESTINATION'] if ENV['DESTINATION']
+      options.base = ENV['BASE'] unless ENV['BASE'].blank?
+      options.destination = ENV['DESTINATION'] unless ENV['DESTINATION'].blank?
       options.merge extra
     end  
   end

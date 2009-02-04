@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = "bones"
-  s.version     = "0.1.3"
-  s.date        = "2009-02-02"
+  s.version     = "0.1.4"
+  s.date        = "2009-02-04"
   s.authors     = ["Chris Scharf", "Ryan Heath"]
   s.email       = "scharfie@gmail.com"
 
