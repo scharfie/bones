@@ -22,17 +22,19 @@ end
 
 class BonesServer
   def self.run
+    statics = public_directories
+    
     app = Rack::Builder.new do
        use Rack::CommonLogger
        use Rack::ShowExceptions
        use Rack::Reloader
-       use Rack::Static, :urls => public_directories, :root => ROOT / 'public'
+       use Rack::Static, :urls => statics, :root => ROOT / 'public'
        run BonesProxy.new
     end
 
     port = ARGV.shift || 3000
     puts "** Starting bones server on http://0.0.0.0:#{port}"
-    puts "** Public directories: #{public_directories.to_sentence}"
+    puts "** Public directories: #{statics.to_sentence}"
     Rack::Handler::Mongrel.run app, :Port => port do |server|
       puts "** Use CTRL-C to stop."
     end
