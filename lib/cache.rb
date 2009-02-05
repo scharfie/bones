@@ -160,6 +160,8 @@ class Bones
         return v
       else
         value = case
+        when path =~ /\..+/ # any path with an extension should be ignored
+          path  
         when path =~ /^(\w{3,}:\/\/|mailto)/
           return path
         when path =~ @public_directories_regex
