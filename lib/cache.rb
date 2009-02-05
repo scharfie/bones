@@ -7,12 +7,13 @@ require 'ostruct'
 class Bones
   class Cache
     class Options
-      attr_accessor :base, :versioned, :release, :destination
+      attr_accessor :base, :versioned, :release, :destination, :noop
       
       def initialize
         super
         self.base        = ''               # Base URL is empty
         self.release     = nil
+        self.noop        = false
       end
       
       def merge(options={})
@@ -37,6 +38,10 @@ class Bones
       
           o.on('--base PATH', "Change the base URL path") do |path|
             options.base = path # Bones.base = path
+          end
+          
+          o.on('--noop', "Do not write any files") do
+            options.noop = true
           end
       
           o.on_tail("-h", "--help", "Show this message") do
@@ -101,11 +106,15 @@ class Bones
       
       # Process each page
       Dir.chdir(ROOT) do
+        puts "** Note: No files/directories will be modified (noop flag)" if options.noop        
         puts "** Writing to: #{options.destination}"
         puts "** Using base: #{options.base}" unless options.base.blank?
         
-        Bones.pages.each do |page|
-          puts  "** Generating #{[version, page].compact.join('/')}.html"
+        pages = Bones.pages
+        total = pages.length
+        pages.each_with_index do |page, index|
+          print  "\r     %-70s (%4d/%4d)" % [[version, page].compact.join('/') + '.html', index + 1, total]
+          $stdout.flush
           template = Bones::Template.new(page)
           template.request = generate_mock_request(:path_info => page)
           result = template.compile
@@ -114,17 +123,23 @@ class Bones
             property =~ /url/ ? 'url(%s%s)' % [url, params] : '%s="%s%s"' % [property, url, params]
           end
           path = options.destination / page + '.html'
-          FileUtils.mkdir_p(File.dirname(path))
-          File.open(path, 'w') { |f| f.write(result) }
+          
+          unless options.noop
+            FileUtils.mkdir_p(File.dirname(path))
+            File.open(path, 'w') { |f| f.write(result) }
+          end  
         end
+        
+        puts "\n"
 
         if options.release?  
           puts "** Copying public files"
-          options.release.copy_public_directories
+          options.release.copy_public_directories unless options.noop
         end
   
-        puts "** Cached to: #{options.destination}" 
-        puts "** Using base: #{options.base}" unless options.base.blank?
+        # puts "** Cached to: #{options.destination}" 
+        # puts "** Using base: #{options.base}" unless options.base.blank?
+        # puts "** Note: No files/directories were modified (noop flag)" if options.noop
       end
 
       puts "** Done."      

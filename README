@@ -51,3 +51,7 @@ Advanced features:
   - Use custom cache directory
 
     rake cache DESTINATION=/some/other/path
+
+  - Dry-run (noop) for testing settings without creating any files
+
+    rake cache NOOP=true		

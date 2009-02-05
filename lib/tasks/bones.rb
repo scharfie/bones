@@ -16,7 +16,9 @@ namespace :cache do
   def destination_from_environment
     %w(DESTINATION DEST).each do |k|
       return ENV[k] unless ENV[k].blank?
-    end  
+    end
+    
+    return nil
   end
   
   def generate_options_from_environment(extra={})
@@ -24,6 +26,7 @@ namespace :cache do
       destination = destination_from_environment
       options.base = ENV['BASE'] unless ENV['BASE'].blank?
       options.destination = destination unless destination.blank?
+      options.noop = true if ENV['NOOP']
       options.merge extra
     end  
   end
