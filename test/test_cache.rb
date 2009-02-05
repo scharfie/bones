@@ -3,7 +3,7 @@ require 'cache'
 
 context "Bones::Cache with default options" do
   uses_example_site
-
+  
   setup do
     @cache = Bones::Cache.new
     @page = @cache.process_page('index')

@@ -15,6 +15,7 @@ require 'extensions'
 require 'erb'
 require 'bones'
 require 'bones/release'
+require 'bones/template'
 
 Bones.booted = true
 

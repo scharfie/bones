@@ -31,6 +31,9 @@ class Test::Unit::TestCase
   
   def self.uses_example_site
     Bones.root = File.expand_path(File.dirname(__FILE__) / 'example_site')
+    define_method(:teardown) do
+      Bones.reset_paths!
+    end
   end
 
   def relative_path(path)
