@@ -45,8 +45,9 @@ class Bones
       FileUtils.mkdir_p(base) unless File.directory?(base)
       Dir.chdir(base) do
         Dir.glob("#{DIR_PREFIX}**").inject([]) do |dirs, dir|
-          dirs << '/' + File.basename(dir)
-        end  
+          dirs << '/' + File.basename(dir) if dir =~ /^#{DIR_PREFIX}\d+$/
+          dirs
+        end.compact
       end
     end
   
