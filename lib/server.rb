@@ -28,7 +28,7 @@ class BonesServer
        use Rack::CommonLogger
        use Rack::ShowExceptions
        use Rack::Reloader
-       use Rack::Static, :urls => statics, :root => ROOT / 'public'
+       use Rack::Static, :urls => statics, :root => Bones.root / 'public'
        run BonesProxy.new
     end
 

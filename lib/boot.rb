@@ -1,10 +1,9 @@
-SYSTEM  = File.dirname(__FILE__)
-ROOT    = File.expand_path('.') unless Object.const_defined?(:ROOT)
-PAGES   = File.join(ROOT, 'pages')
-LAYOUTS = File.join(ROOT, 'layouts')
+require File.join(File.dirname(__FILE__), 'bones.rb')
 
-$:.unshift(SYSTEM)
-$:.unshift(File.join(ROOT, 'lib'))
+Bones.root = BONES_ROOT if Object.const_defined?(:BONES_ROOT)
+
+$:.unshift(Bones.system_path)
+$:.unshift(File.join(Bones.root, 'lib'))
 
 require 'rubygems'
 require 'yaml'
@@ -17,17 +16,19 @@ require 'erb'
 require 'bones'
 require 'bones/release'
 
+Bones.booted = true
+
 def directories(base)
   Dir.chdir(base) do
     Dir.entries(base).map do |e|
       next if e =~ /^\.+$/ 
       File.directory?(base / e) ? '/' + e : nil
     end.compact
-  end  
+  end
 end
 
 def page_directories
-  directories(ROOT / 'pages')
+  directories(Bones.root / 'pages')
 end
 
 def versioned_directories
@@ -35,5 +36,5 @@ def versioned_directories
 end
 
 def public_directories
-  directories(ROOT / 'public') - page_directories - versioned_directories
+  directories(Bones.root / 'public') - page_directories - versioned_directories
 end

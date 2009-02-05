@@ -21,10 +21,13 @@ class Bones
           method = "#{k}=".to_sym
           send(method, v) if respond_to?(method)
         end
+        
+        self
       end
   
       # Process arguments
       def self.process(args)
+        args = [] if args.blank?
         options = new
     
         OptionParser.new do |o|
@@ -72,7 +75,7 @@ class Bones
       end
       
       def default_destination
-        File.expand_path(ROOT / 'public')
+        File.expand_path(Bones.root / 'public')
       end
   
       # Returns true if the versions enabled
@@ -94,7 +97,14 @@ class Bones
     attr_accessor :options
     
     def initialize(options=nil)
-      self.options = Options === options ? options : Options.process(options)
+      self.options = case options
+      when Hash
+        Options.new.merge(options)
+      when Options
+        options
+      else  
+        Options.process(options)
+      end  
     end
     
     def self.run(options=nil)
@@ -105,7 +115,7 @@ class Bones
       version = options.versioned? ? options.release.versioned_directory_name : nil
       
       # Process each page
-      Dir.chdir(ROOT) do
+      Dir.chdir(Bones.root) do
         puts "** Note: No files/directories will be modified (noop flag)" if options.noop        
         puts "** Writing to: #{options.destination}"
         puts "** Using base: #{options.base}" unless options.base.blank?
@@ -115,14 +125,9 @@ class Bones
         pages.each_with_index do |page, index|
           print  "\r     %-70s (%4d/%4d)" % [[version, page].compact.join('/') + '.html', index + 1, total]
           $stdout.flush
-          template = Bones::Template.new(page)
-          template.request = generate_mock_request(:path_info => page)
-          result = template.compile
-          result.gsub!(/(href|src|action|url)(="|\()([-A-Za-z0-9_\.\/]+)([^:]*?)("|\))/) do |match|
-            property, url, params = $1, normalize_url(original_url = $3, options.base), $4
-            property =~ /url/ ? 'url(%s%s)' % [url, params] : '%s="%s%s"' % [property, url, params]
-          end
-          path = options.destination / page + '.html'
+          
+          result = process_page(page)
+          path   = options.destination / page + '.html'
           
           unless options.noop
             FileUtils.mkdir_p(File.dirname(path))
@@ -136,13 +141,22 @@ class Bones
           puts "** Copying public files"
           options.release.copy_public_directories unless options.noop
         end
-  
-        # puts "** Cached to: #{options.destination}" 
-        # puts "** Using base: #{options.base}" unless options.base.blank?
-        # puts "** Note: No files/directories were modified (noop flag)" if options.noop
       end
 
       puts "** Done."      
+    end
+    
+    def process_page(page)
+      template = Bones::Template.new(page)
+      template.request = generate_mock_request(:path_info => page)
+      process_template(template.compile)
+    end
+    
+    def process_template(result)
+      result.gsub(/(href|src|action|url)(="|\()([-A-Za-z0-9_\.\/]+)([^:]*?)("|\))/) do |match|
+        property, url, params = $1, normalize_url(original_url = $3), $4
+        property =~ /url/ ? 'url(%s%s)' % [url, params] : '%s="%s%s"' % [property, url, params]
+      end      
     end
     
     # Fixes the given URL path to begin at given base.
@@ -152,7 +166,7 @@ class Bones
     # For example, if the base is /some_folder,
     #   normalize_url('/page_path', '/some_folder')
     #   # => /some_folder/page_path.html
-    def normalize_url(path, base='')
+    def normalize_url(path)
       @known_pairs ||= {}
       @public_directories_regex ||= Regexp.new(public_directories.join('|'))
   
@@ -160,19 +174,19 @@ class Bones
         return v
       else
         value = case
-        when path =~ /\..+/ # any path with an extension should be ignored
-          path  
         when path =~ /^(\w{3,}:\/\/|mailto)/
+          # don't do anything to this type of URL
           return path
         when path =~ @public_directories_regex
           path
         when File.directory?('pages' / path)
           path
         else
-          path + '.html'
+          # don't add .html if there's already an extension
+          path =~ /\..+/ ? path : path + '.html'
         end
-    
-        @known_pairs[path] = base / value
+        
+        @known_pairs[path] = options.base / value
       end    
     end    
 

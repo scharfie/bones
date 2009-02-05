@@ -3,10 +3,40 @@
 # do the dirty work.
 class Bones
   class << self
-    attr_accessor :base
+    attr_accessor :base, :root
+    attr_accessor :system_path, :pages_path, :layouts_path
+    attr_accessor :booted
     
     def base
       @base || ''
+    end
+    
+    # Path to the root of the bones project
+    # Defaults to current directory
+    def root
+      @root ||= File.expand_path('.')
+    end
+    
+    # Path to the bones system files
+    # Defaults to the directory containing this file
+    def system_path
+      @system_path ||= File.expand_path(File.dirname(__FILE__))
+    end
+    
+    # Path to the directory containing the page templates
+    #   [root]/pages
+    def pages_path
+      @pages_path || root / 'pages'
+    end
+    
+    # Path to the directory containing the layout templates
+    #   [root]/layouts
+    def layouts_path
+      @layouts_path || root / 'layouts'
+    end
+    
+    def booted?
+      @booted
     end
   end
   
@@ -29,7 +59,7 @@ class Bones
   
   # Returns array of all pages (excluding partials)
   def self.pages
-    Dir.chdir(PAGES) do
+    Dir.chdir(Bones.pages_path) do
       Dir.glob('**/*.html.erb').map do |f|
         f.starts_with?('_') ? nil : f.gsub('.html.erb', '')
       end.compact
@@ -48,8 +78,8 @@ class Bones
     # Load all available helpers
     def self.include_helpers
       files = [
-        Dir.glob(SYSTEM / 'helpers/*_helper.rb'),
-        Dir.glob(ROOT / 'helpers/*_helper.rb')
+        Dir.glob(Bones.system_path / 'helpers/*_helper.rb'),
+        Dir.glob(Bones.root / 'helpers/*_helper.rb')
       ].flatten
       
       # Include each helper
@@ -61,7 +91,7 @@ class Bones
     end
     
     # Load the helpers
-    include_helpers if Object.const_defined?(:SYSTEM)
+    include_helpers if Bones.booted?
     
     # Initialize template with path and optional layout
     def initialize(path, layout=-1, options={})
@@ -80,9 +110,9 @@ class Bones
     def filename
       if @path =~ /raw$/
         layout false
-        path = SYSTEM / 'pages' / 'directory.html.erb'
+        path = Bones.system_path / 'pages' / 'directory.html.erb'
       else
-        path = PAGES / @path
+        path = Bones.pages_path / @path
         path /= 'index' if File.directory?(path) or path.ends_with?('/')
         path += '.html.erb'
       end
@@ -95,7 +125,7 @@ class Bones
     
     # Full path to layout file
     def layout_filename
-      path = LAYOUTS / layout.to_s + '.html.erb'
+      path = Bones.layouts_path / layout.to_s + '.html.erb'
     end
     
     # Gets/sets layout
@@ -114,7 +144,7 @@ class Bones
       src = (local_assigns_source || '') + (src || '')
       @content_for_layout = eval(src) # erb.result(binding)
       
-      if layout
+      if layout && File.file?(layout_filename)
         erb = ERB.new(File.read(layout_filename))
         erb.result(binding)
       else

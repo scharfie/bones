@@ -15,13 +15,13 @@ class Bones
     end
     
     def original_destination
-      @original_destination || (ROOT / 'public')
+      @original_destination || (Bones.root / 'public')
     end
   
     # Copies all public directories to the new release directory
     def copy_public_directories
       public_directories.each do |src|
-        FileUtils.copy_entry ROOT / 'public' / src, destination / src
+        FileUtils.copy_entry Bones.root / 'public' / src, destination / src
       end
     end  
   end
@@ -41,7 +41,7 @@ class Bones
     # $> Bones::Versioned.directories
     # $> => ["/v1", "/v2", ... "/vN"]
     def self.directories(base=nil)
-      base ||= ROOT / 'public'
+      base ||= Bones.root / 'public'
       FileUtils.mkdir_p(base) unless File.directory?(base)
       Dir.chdir(base) do
         Dir.glob("#{DIR_PREFIX}**").inject([]) do |dirs, dir|

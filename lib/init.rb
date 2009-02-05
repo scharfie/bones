@@ -18,19 +18,19 @@ class BonesInitializer
   def self.run
     puts "** Initializing"
 
-    ensure_directory(ROOT / 'public' / 'javascripts')
-    ensure_directory(ROOT / 'public' / 'stylesheets')
-    pages_new = ensure_directory(ROOT / 'pages')
-    ensure_directory(ROOT / 'layouts')
-    ensure_directory(ROOT / 'helpers')
+    ensure_directory(Bones.root / 'public' / 'javascripts')
+    ensure_directory(Bones.root / 'public' / 'stylesheets')
+    pages_new = ensure_directory(Bones.root / 'pages')
+    ensure_directory(Bones.root / 'layouts')
+    ensure_directory(Bones.root / 'helpers')
 
     if pages_new
-      ensure_file(ROOT / 'pages' / 'index.html.erb') do |f|
-        f.write File.read(SYSTEM / 'pages' / 'intro.html.erb')
+      ensure_file(Bones.root / 'pages' / 'index.html.erb') do |f|
+        f.write File.read(Bones.system_path / 'pages' / 'intro.html.erb')
       end
     end  
 
-    ensure_file(ROOT / 'layouts' / 'application.html.erb') do |f|
+    ensure_file(Bones.root / 'layouts' / 'application.html.erb') do |f|
       f.write <<-HTML
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -49,11 +49,11 @@ class BonesInitializer
       HTML
     end
 
-    ensure_file(ROOT / 'public' / 'stylesheets' / 'styles.css')
+    ensure_file(Bones.root / 'public' / 'stylesheets' / 'styles.css')
 
-    ensure_file(ROOT / 'Rakefile') do |f|
+    ensure_file(Bones.root / 'Rakefile') do |f|
       puts "** Adding Rakefile to parent directory"
-      f.write File.read(SYSTEM / 'Rakefile')
+      f.write File.read(Bones.system_path / 'Rakefile')
     end
 
     puts <<-HELP if __FILE__ == $0

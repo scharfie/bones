@@ -14,7 +14,7 @@ path = File.expand_path(path)
 FileUtils.mkdir(path) unless File.directory?(path)
 
 # Set the root to the path
-ROOT = path
+BONES_ROOT = path
 
 require 'boot.rb'
 require 'init.rb'
