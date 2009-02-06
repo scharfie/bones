@@ -2,8 +2,8 @@ require File.join(File.dirname(__FILE__), 'bones.rb')
 
 Bones.root = BONES_ROOT if Object.const_defined?(:BONES_ROOT)
 
-$:.unshift(Bones.system_path)
-$:.unshift(File.join(Bones.root, 'lib'))
+# $:.unshift(Bones.system_path)
+# $:.unshift(File.join(Bones.root, 'lib'))
 
 require 'rubygems'
 require 'yaml'
@@ -11,11 +11,19 @@ require 'rack'
 require 'rack/request'
 require 'rack/response'
 require 'activesupport'
-require 'extensions'
+
+ActiveSupport::Dependencies.load_paths.push << Bones.system_path
+
+require 'lib/extensions'
+require 'fileutils'
+require 'optparse'
+require 'ostruct'
 require 'erb'
-require 'bones'
-require 'bones/release'
-require 'bones/template'
+
+
+# require 'bones/cache'
+# require 'bones/release'
+# require 'bones/template'
 
 Bones.booted = true
 

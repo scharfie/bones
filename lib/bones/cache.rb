@@ -1,9 +1,3 @@
-#!/usr/bin/env ruby
-require File.join(File.dirname(__FILE__), 'boot')
-require 'fileutils'
-require 'optparse'
-require 'ostruct'
-
 class Bones
   class Cache
     class Options

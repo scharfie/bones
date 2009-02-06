@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/test_helper'
-require 'cache'
 
 context "Bones::Cache with default options" do
   uses_example_site

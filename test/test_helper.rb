@@ -20,7 +20,10 @@ def context(name, &block)
   Object.const_set(name.to_s.to_test_class_name, Class.new(Test::Unit::TestCase, &block))
 end 
 
+
 class Test::Unit::TestCase
+  class << self; attr_accessor :bones_root; end
+  
   def self.test(name, &block)
     define_method(name.to_test_method_name, &block)
   end
@@ -28,14 +31,30 @@ class Test::Unit::TestCase
   def self.setup(&block)
     define_method(:setup, &block)
   end
+
+  # def self.reset_bones
+  #   Bones.reset
+  #   Bones.root = File.expand_path(File.dirname(__FILE__) + '/../../')
+  # end
   
   def self.uses_example_site
-    Bones.root = File.expand_path(File.dirname(__FILE__) / 'example_site')
-    define_method(:teardown) do
-      Bones.reset_paths!
-    end
+    self.bones_root = File.expand_path(File.dirname(__FILE__) / 'example_site')
   end
 
+  def run_with_bones_root(*args, &block)
+    with_bones_root do
+      run_without_bones_root(*args, &block)
+    end  
+  end
+  
+  alias_method_chain :run, :bones_root unless method_defined?(:run_without_bones_root)
+  
+  def with_bones_root(root=nil, &block)
+    previous_root, Bones.root = Bones.root, (root || self.class.bones_root)
+    yield(block)
+    Bones.root = previous_root
+  end
+  
   def relative_path(path)
     File.expand_path(File.dirname(__FILE__) / path)
   end
