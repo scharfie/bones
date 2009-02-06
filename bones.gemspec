@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = "bones"
-  s.version     = "0.1.5"
-  s.date        = "2009-02-04"
+  s.version     = "0.2.0"
+  s.date        = "2009-02-05"
   s.authors     = ["Chris Scharf", "Ryan Heath"]
   s.email       = "scharfie@gmail.com"
 
@@ -12,26 +12,49 @@ Gem::Specification.new do |s|
   s.has_rdoc    = false
 	
   s.require_paths      = ['lib']	
-  s.default_executable = 'bones'
   s.executables        = ['bones']
+  s.default_executable = 'bones'
   
   s.files = [ 
-    'README',
-    'lib/Rakefile',
+    'bin',
     'bin/bones',
-    'lib/bones.rb',
+    'bones.gemspec',
+    'lib/bones',
+    'lib/bones/cache.rb',
+    'lib/bones/initializer.rb',
     'lib/bones/release.rb',
+    'lib/bones/template.rb',
+    'lib/bones/versioned_release.rb',
+    'lib/bones.rb',
     'lib/boot.rb',
-    'lib/cache.rb',
     'lib/extensions.rb',
     'lib/helpers',
     'lib/helpers/core_helper.rb',
-    'lib/init.rb',
     'lib/pages/directory.html.erb',
     'lib/pages/intro.html.erb',
+    'lib/Rakefile',
     'lib/server.rb',
+    'lib/tasks',
     'lib/tasks/bones.rb',
-    'bones.gemspec'
+    'Rakefile',
+    'README',
+    'test',
+    'test/example_site',
+    'test/example_site/layouts',
+    'test/example_site/pages',
+    'test/example_site/pages/about.html.erb',
+    'test/example_site/pages/index.html.erb',
+    'test/example_site/pages/things',
+    'test/example_site/pages/things/a.html.erb',
+    'test/example_site/public',
+    'test/example_site/public/images',
+    'test/example_site/public/javascripts',
+    'test/example_site/public/stylesheets',
+    'test/example_site/public/videos',
+    'test/test_bones.rb',
+    'test/test_cache.rb',
+    'test/test_example_site.rb',
+    'test/test_helper.rb'
   ]
 
   # Dependencies
