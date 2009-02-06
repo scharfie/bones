@@ -8,15 +8,18 @@ class Bones
     attr_accessor :options
     attr_accessor :request
     
-    # Load all available helpers
-    def self.include_helpers
+    # Returns array of all helper files that should
+    # be included
+    def self.helpers_to_include
       files = [
         Dir.glob(Bones.system_path / 'helpers/*_helper.rb'),
         Dir.glob(Bones.root / 'helpers/*_helper.rb')
       ].flatten
-      
-      # Include each helper
-      files.each do |filename|
+    end
+    
+    # Load all available helpers
+    def self.include_helpers
+      helpers_to_include.each do |filename|
         klass = File.basename(filename, '.rb').camelize
         force_load klass => filename
         include klass.constantize
@@ -41,9 +44,9 @@ class Bones
     
     # Full path to template file
     def filename
-      if @path =~ /raw$/
+      if self.path =~ /raw$/
         layout false
-        path = Bones.system_path / 'pages' / 'directory.html.erb'
+        Bones.system_path / 'pages' / 'directory.html.erb'
       else
         path = Bones.pages_path / @path
         path /= 'index' if File.directory?(path) or path.ends_with?('/')
@@ -58,7 +61,7 @@ class Bones
     
     # Full path to layout file
     def layout_filename
-      path = Bones.layouts_path / layout.to_s + '.html.erb'
+      Bones.layouts_path / layout.to_s + '.html.erb'
     end
     
     # Gets/sets layout

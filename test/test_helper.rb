@@ -63,3 +63,6 @@ class Test::Unit::TestCase
     assert collection.include?(obj), message
   end
 end
+
+class TestRequest < OpenStruct
+end
