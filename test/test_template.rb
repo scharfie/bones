@@ -65,5 +65,9 @@ context "Bones template 'about'" do
   test "should use layout 'example_layout'" do
     assert_equal 'example_layout', @template.layout
     assert_include @response, 'Example Layout'
+    assert_include @response, 'About page'
+    assert_include @response, 'Chris'
+    
+    assert 'Chris', @template.instance_variable_get(:@content_for_name)
   end
 end

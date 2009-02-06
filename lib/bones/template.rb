@@ -82,7 +82,10 @@ class Bones
       
       if layout && File.file?(layout_filename)
         erb = ERB.new(File.read(layout_filename))
-        erb.result(binding)
+        eval(erb.src) do |key|
+          key = :layout if key.blank?
+          instance_variable_get(:"@content_for_#{key}")
+        end
       else
         @content_for_layout
       end  

@@ -37,24 +37,32 @@ class Bones
 
       ensure_file(Bones.root / 'layouts' / 'application.html.erb') do |f|
         f.write <<-HTML
-      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-      <html>
-      <head>
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-        <title>Welcome to bones</title>
-        <%= stylesheet_link_tag 'styles' %>
-        <%= javascript_include_tag %>
-      </head>  
-      <body>
-        <h1>Welcome to <strong>bones</strong></h1>
-        <%= @content_for_layout %>
-      </body>
-      </html>  
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>Welcome to bones</title>
+  <%= stylesheet_link_tag 'styles' %>
+  <%= javascript_include_tag %>
+</head>  
+<body>
+  <h1>Welcome to <strong>bones</strong></h1>
+  <%= yield %>
+</body>
+</html>  
         HTML
       end
 
       ensure_file(Bones.root / 'public' / 'stylesheets' / 'styles.css')
+
+      ensure_file(Bones.root / 'helpers' / 'application_helper.rb') do |f|
+        f.write <<-HELPER
+module ApplicationHelper
+  # Provide any custom helpers that want in this module
+end        
+        HELPER
+      end
 
       ensure_file(Bones.root / 'Rakefile') do |f|
         puts "** Adding Rakefile to parent directory"

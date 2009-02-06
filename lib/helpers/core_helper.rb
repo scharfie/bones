@@ -141,5 +141,5 @@ module CoreHelper
   # Returns base URL
   def base
     Bones.base
-  end
+  end  
 end
