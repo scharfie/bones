@@ -1,7 +1,3 @@
-#!/usr/bin/env ruby
-require File.join(File.dirname(__FILE__), 'boot')
-require 'init'
-
 # BonesProxy is simply a proxy class handler
 # to the actual Bones class - the reason for 
 # this is to allow live changes to Bones

@@ -2,8 +2,6 @@
 # which BonesProxy loads and calls upon to
 # do the dirty work.
 class Bones
-  DEFAULT_ROOT = File.expand_path(File.dirname(__FILE__) + '/../../')
-  
   class << self
     attr_accessor :base, :root
     attr_accessor :system_path, :pages_path, :layouts_path
@@ -16,7 +14,7 @@ class Bones
     # Path to the root of the bones project
     # Defaults to current directory
     def root
-      @root ||= DEFAULT_ROOT
+      @root ||= File.expand_path(File.dirname(__FILE__) + '/../../')
     end
     
     # Path to the bones system files
