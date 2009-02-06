@@ -58,8 +58,8 @@ class Bones
 
       ensure_file(Bones.root / 'helpers' / 'application_helper.rb') do |f|
         f.write <<-HELPER
+# Provide any custom helpers that want in this module
 module ApplicationHelper
-  # Provide any custom helpers that want in this module
 end        
         HELPER
       end
