@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
-# $:.unshift(File.dirname(__FILE__) + '/../')
-require 'fileutils'
-
+require File.join(File.dirname(__FILE__), '../lib/boot')
 path = ARGV.shift
 
 if path.nil?
@@ -13,10 +11,4 @@ end
 path = File.expand_path(path)
 FileUtils.mkdir(path) unless File.directory?(path)
 
-# Set the root to the path
-BONES_ROOT = path
-
-require 'boot.rb'
-require 'init.rb'
-
-BonesInitializer.run
+Bones::Initializer.run(path)
