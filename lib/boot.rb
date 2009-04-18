@@ -4,14 +4,9 @@ require 'activesupport'
 require File.join(File.dirname(__FILE__), 'bones.rb')
 require File.join(File.dirname(__FILE__), 'extensions.rb')
 
-# Bones.root = BONES_ROOT if Object.const_defined?(:BONES_ROOT)
 ActiveSupport::Dependencies.load_paths.push << Bones.system_path
 
 require 'yaml'
-gem 'rack'
-require 'rack/request'
-require 'rack/response'
-
 require 'fileutils'
 require 'optparse'
 require 'ostruct'

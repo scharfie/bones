@@ -28,6 +28,7 @@ class Bones
       pages_new = ensure_directory(Bones.root / 'pages')
       ensure_directory(Bones.root / 'layouts')
       ensure_directory(Bones.root / 'helpers')
+      ensure_directory(Bones.root / 'tmp')
 
       if pages_new
         ensure_file(Bones.root / 'pages' / 'index.html.erb') do |f|
@@ -36,37 +37,23 @@ class Bones
       end  
 
       ensure_file(Bones.root / 'layouts' / 'application.html.erb') do |f|
-        f.write <<-HTML
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <title>Welcome to bones</title>
-  <%= stylesheet_link_tag 'styles' %>
-  <%= javascript_include_tag %>
-</head>  
-<body>
-  <h1>Welcome to <strong>bones</strong></h1>
-  <%= yield %>
-</body>
-</html>  
-        HTML
+        f.write File.read(Bones.system_path / 'layouts' / 'application.html.erb')
       end
 
       ensure_file(Bones.root / 'public' / 'stylesheets' / 'styles.css')
 
       ensure_file(Bones.root / 'helpers' / 'application_helper.rb') do |f|
-        f.write <<-HELPER
-# Provide any custom helpers that want in this module
-module ApplicationHelper
-end        
-        HELPER
+        f.write File.read(Bones.system_path / 'helpers' / 'application_helper.rb')
       end
 
       ensure_file(Bones.root / 'Rakefile') do |f|
         puts "** Adding Rakefile to parent directory"
         f.write File.read(Bones.system_path / 'Rakefile')
+      end
+      
+      ensure_file(Bones.root / 'config.ru') do |f|
+        puts "** Adding config.ru to parent directory"
+        f.write File.read(Bones.system_path / 'config.ru')
       end
 
       puts <<-HELP if __FILE__ == $0
