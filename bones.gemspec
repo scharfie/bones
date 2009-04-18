@@ -68,6 +68,6 @@ Gem::Specification.new do |s|
   ]
 
   # Dependencies
-  s.add_dependency("rack", ["= 0.3.0"])
+  s.add_dependency("rack", [">= 0.3.0"])
   s.add_dependency("activesupport", [">= 2.1.0"])
 end

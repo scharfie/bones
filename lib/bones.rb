@@ -57,9 +57,10 @@ class Bones
     output   = template.compile
 
     # Build a rack response
-    Rack::Response.new.finish do |response|
-      response.write output
-    end    
+    # Rack::Response.new.finish do |response|
+    #   response.write output
+    # end    
+    [200, { 'Content-Type' => 'text/html'}, output]
   end
   
   # Returns array of all pages (excluding partials)

@@ -8,7 +8,7 @@ require File.join(File.dirname(__FILE__), 'extensions.rb')
 ActiveSupport::Dependencies.load_paths.push << Bones.system_path
 
 require 'yaml'
-require 'rack'
+gem 'rack'
 require 'rack/request'
 require 'rack/response'
 

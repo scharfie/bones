@@ -76,6 +76,10 @@ class Bones
     # Compiles the template (along with the layout
     # if necessary)
     def compile
+      unless File.exist?(filename)
+        raise "Template missing\n#{filename}"
+      end
+      
       src = ERB.new(File.read(filename)).src
       src = (local_assigns_source || '') + (src || '')
       @content_for_layout = eval(src) # erb.result(binding)
