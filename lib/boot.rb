@@ -1,10 +1,11 @@
 require 'rubygems'
 require 'activesupport'
-
+require 'rack'
 require File.join(File.dirname(__FILE__), 'bones.rb')
 require File.join(File.dirname(__FILE__), 'extensions.rb')
 
-ActiveSupport::Dependencies.load_paths.push << Bones.system_path
+ActiveSupport::Dependencies.load_paths.push Bones.system_path
+$:.push Bones.system_path
 
 require 'yaml'
 require 'fileutils'

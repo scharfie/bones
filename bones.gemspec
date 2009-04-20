@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = "bones"
-  s.version     = "0.2.2"
-  s.date        = "2009-04-18"
+  s.version     = "0.2.3"
+  s.date        = "2009-04-20"
   s.authors     = ["Chris Scharf", "Ryan Heath"]
   s.email       = "scharfie@gmail.com"
 
@@ -30,7 +30,6 @@ Gem::Specification.new do |s|
     'lib/bones/versioned_release.rb',
     'lib/bones.rb',
     'lib/boot.rb',
-    'lib/config.ru',
     'lib/extensions.rb',
     'lib/helpers',
     'lib/helpers/application_helper.rb',
@@ -39,7 +38,6 @@ Gem::Specification.new do |s|
     'lib/layouts/application.html.erb',
     'lib/pages/directory.html.erb',
     'lib/pages/intro.html.erb',
-    'lib/Rakefile',
     'lib/tasks',
     'lib/tasks/bones.rb',
     'Rakefile',
@@ -70,7 +68,11 @@ Gem::Specification.new do |s|
     'test/test_cache.rb',
     'test/test_template.rb',
     'test/test_example_site.rb',
-    'test/test_helper.rb'
+    'test/test_helper.rb',
+    'pushables',
+    'pushables/boot.rb',
+    'pushables/config.ru',
+    'pushables/Rakefile'
   ]
 
   # Dependencies

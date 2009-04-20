@@ -5,7 +5,7 @@ task :default => :server
 desc "Start bones server"
 task :server do
   ARGV.shift
-  load File.join(File.dirname(__FILE__), '..', 'server.rb')
+  # load File.join(File.dirname(__FILE__), '..', 'server.rb')
   Bones::Server.run
 end
 

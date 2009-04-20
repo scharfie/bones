@@ -76,6 +76,9 @@ class Bones
     # Compiles the template (along with the layout
     # if necessary)
     def compile
+      # go away, favicon requests
+      return String.new if File.basename(filename) =~ /^favicon.ico/
+      
       unless File.exist?(filename)
         raise "Template missing\n#{filename}"
       end

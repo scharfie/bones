@@ -47,23 +47,16 @@ class Bones
       end
 
       ensure_file(Bones.root / 'Rakefile') do |f|
-        puts "** Adding Rakefile to parent directory"
-        f.write File.read(Bones.system_path / 'Rakefile')
+        f.write File.read(Bones.system_path / '../pushables/Rakefile')
+      end
+
+      ensure_file(Bones.root / 'boot.rb') do |f|
+        f.write File.read(Bones.system_path / '../pushables/boot.rb')
       end
       
       ensure_file(Bones.root / 'config.ru') do |f|
-        puts "** Adding config.ru to parent directory"
-        f.write File.read(Bones.system_path / 'config.ru')
+        f.write File.read(Bones.system_path / '../pushables/config.ru')
       end
-
-      puts <<-HELP if __FILE__ == $0
-
-       All set! Now just run:
-         rake server
- 
-       The app will run on port 3000
- 
-      HELP
     end
   end
 end
