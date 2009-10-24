@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
-  s.name        = "bones"
-  s.version     = "0.2.3"
-  s.date        = "2009-04-20"
+  s.name        = "scharfie-bones"
+  s.version     = "0.2.4"
+  s.date        = "2009-10-24"
   s.authors     = ["Chris Scharf", "Ryan Heath"]
   s.email       = "scharfie@gmail.com"
 
@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.files = [ 
     'bin',
     'bin/bones',
-    'bones.gemspec',
+    'scharfie-bones.gemspec',
     'lib/bones',
     'lib/bones/cache.rb',
     'lib/bones/initializer.rb',
@@ -28,9 +28,10 @@ Gem::Specification.new do |s|
     'lib/bones/static.rb',
     'lib/bones/template.rb',
     'lib/bones/versioned_release.rb',
+    'lib/bones/bones.rb',
+    'lib/bones/boot.rb',
+    'lib/bones/extensions.rb',
     'lib/bones.rb',
-    'lib/boot.rb',
-    'lib/extensions.rb',
     'lib/helpers',
     'lib/helpers/application_helper.rb',
     'lib/helpers/core_helper.rb',

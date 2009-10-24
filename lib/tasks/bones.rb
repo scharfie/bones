@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '..', 'boot.rb')
+require File.join(File.dirname(__FILE__), '../bones/boot.rb')
 
 task :default => :server
 

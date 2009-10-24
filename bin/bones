@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
-require File.join(File.dirname(__FILE__), '../lib/boot')
+require File.expand_path(File.join(File.dirname(__FILE__), '../lib/bones/boot.rb'))
+require File.expand_path(File.join(File.dirname(__FILE__), '../lib/bones/initializer.rb'))
 path = ARGV.shift
 
 if path.nil?
