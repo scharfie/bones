@@ -1,5 +1,5 @@
 $:.unshift(File.dirname(__FILE__) + '/../')
-require 'lib/boot'
+require 'lib/bones/boot'
 require 'test/unit'
 
 class String
@@ -18,8 +18,7 @@ end
 
 def context(name, &block)
   Object.const_set(name.to_s.to_test_class_name, Class.new(Test::Unit::TestCase, &block))
-end 
-
+end
 
 class Test::Unit::TestCase
   class << self; attr_accessor :bones_root; end
@@ -38,7 +37,7 @@ class Test::Unit::TestCase
   # end
   
   def self.uses_example_site
-    self.bones_root = File.expand_path(File.dirname(__FILE__) / 'example_site')
+    self.bones_root = Pathname.new(__FILE__).dirname.join('example_site').expand_path.to_s
   end
 
   def run_with_bones_root(*args, &block)
@@ -56,10 +55,11 @@ class Test::Unit::TestCase
   end
   
   def relative_path(path)
-    File.expand_path(File.dirname(__FILE__) / path)
+    Pathname.new(__FILE__).dirname.join(path).expand_path.to_s
   end
   
   def assert_include(collection, obj, message=nil)
+    message ||= "expected #{collection.inspect} to include #{obj.inspect}"
     assert collection.include?(obj), message
   end
 end

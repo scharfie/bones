@@ -14,6 +14,23 @@ context "Bones::Cache with default options" do
     assert_include @page, 'href="/things/a.html"'
   end
 end
+
+context 'Bones::Cache with default options, layout' do
+  uses_example_site
+  
+  setup do
+    @cache = Bones::Cache.new
+    @page = @cache.process_page('about')
+  end
+  
+  test "should have layout" do
+    assert_include @page, 'Example Layout'
+  end
+
+  test "should have footer" do
+    assert_include @page, 'Footer text'
+  end
+end
   
 context "Bones::Cache with custom base" do
   uses_example_site

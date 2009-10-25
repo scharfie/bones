@@ -12,15 +12,14 @@ class Bones
     end
     
     # Path to the root of the bones project
-    # Defaults to current directory
     def root
-      @root ||= File.expand_path(File.dirname(__FILE__) + '/../../')
+      @root ||= Pathname.new(__FILE__).dirname.dirname.expand_path.to_s
     end
     
     # Path to the bones system files
-    # Defaults to the directory containing this file
+    # Defaults to the lib
     def system_path
-      @system_path ||= File.expand_path(File.dirname(File.dirname(__FILE__)))
+      @system_path ||= Pathname.new(__FILE__).dirname.dirname.expand_path.to_s
     end
     
     # Path to the directory containing the page templates

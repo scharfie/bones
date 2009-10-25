@@ -85,7 +85,7 @@ class Bones
       
       src = ERB.new(File.read(filename)).src
       src = (local_assigns_source || '') + (src || '')
-      @content_for_layout = eval(src) # erb.result(binding)
+      @content_for_layout = eval(src)
       
       if layout && File.file?(layout_filename)
         erb = ERB.new(File.read(layout_filename))
@@ -118,7 +118,7 @@ class Bones
     # the '_footer.html.erb' template.
     def partial(name, options={})
       path = name.to_s.split('/')
-      path[-1] = '_' + path.last unless path.last.starts_with?('_')
+      path.last.gsub!(/^([^_])/, '_\1')
       name = path.join('/')
       template = Template.new(name, false, options)
       template.request = request

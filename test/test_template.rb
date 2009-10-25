@@ -31,8 +31,9 @@ context "Bones Template" do
     assert_include @template.some_custom_helper, 'Some custom helper'
   end
   
-  test "should render partial partials/footer" do
-    assert_include @template.partial('partials/footer'), 'Footer text'
+  test "should render partial partials/common/footer" do
+    # @template.layout = 'example_layout'
+    assert_include @template.partial('partials/common/footer'), 'Footer text'
   end
   
 end

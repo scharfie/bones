@@ -2,10 +2,10 @@ require File.dirname(__FILE__) + '/test_helper'
 
 context 'Bones' do
   test "should have proper paths" do
-    assert_equal relative_path('../..'),         Bones.root
-    assert_equal relative_path('../lib'),        Bones.system_path
-    assert_equal relative_path('../../pages'),   Bones.pages_path
-    assert_equal relative_path('../../layouts'), Bones.layouts_path
+    assert_equal relative_path('../lib'),         Bones.root
+    assert_equal relative_path('../lib'),         Bones.system_path
+    assert_equal relative_path('../lib/pages'),   Bones.pages_path
+    assert_equal relative_path('../lib/layouts'), Bones.layouts_path
   end
   
   test "should allow getting/setting Bones.base" do
