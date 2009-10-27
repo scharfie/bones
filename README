@@ -18,7 +18,12 @@ Starting it up:
 
 	- Install
 
-	  sudo gem install scharfie-bones -s http://gems.github.com
+          If you aren't using gemcutter yet:
+          sudo gem install gemcutter
+          gem tumble
+
+          Then:
+	  sudo gem install scharfie-bones
 
 	- Generate:
 
