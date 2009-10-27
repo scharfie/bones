@@ -66,7 +66,7 @@ class Bones
   def self.pages
     Dir.chdir(Bones.pages_path) do
       Dir.glob('**/*.html.erb').map do |f|
-        f.starts_with?('_') ? nil : f.gsub('.html.erb', '')
+        File.basename(f).starts_with?('_') ? nil : f.gsub('.html.erb', '')
       end.compact
     end
   end  
