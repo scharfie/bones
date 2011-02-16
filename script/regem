@@ -1,0 +1,8 @@
+rm *.gem
+gem build scharfie-bones.gemspec
+gem install *.gem -t -V
+# cd ../binbones
+# rm -rf bones-take*
+# /Users/Chris/.gem/ruby/1.8/bin/bones bones-take1
+# cd bones-take1
+# rake server

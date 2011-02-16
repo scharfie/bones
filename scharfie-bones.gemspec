@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = "scharfie-bones"
-  s.version     = "0.2.5"
-  s.date        = "2009-10-27"
+  s.version     = "0.2.6"
+  s.date        = "2011-02-15"
   s.authors     = ["Chris Scharf", "Ryan Heath"]
   s.email       = "scharfie@gmail.com"
 
@@ -29,7 +29,6 @@ Gem::Specification.new do |s|
     'lib/bones/template.rb',
     'lib/bones/versioned_release.rb',
     'lib/bones/bones.rb',
-    'lib/bones/boot.rb',
     'lib/bones/extensions.rb',
     'lib/bones.rb',
     'lib/helpers',
@@ -77,7 +76,15 @@ Gem::Specification.new do |s|
     'pushables/Rakefile'
   ]
 
+  s.test_files = [
+    'test/test_bones.rb',
+    'test/test_cache.rb',
+    'test/test_template.rb',
+    'test/test_example_site.rb',
+    'test/test_helper.rb'  
+  ]
+
   # Dependencies
   s.add_dependency("rack", [">= 0.3.0"])
-  s.add_dependency("activesupport", [">= 2.1.0"])
+  s.add_dependency("activesupport", [">= 2.3.10"])
 end

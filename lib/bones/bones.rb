@@ -37,6 +37,27 @@ class Bones
     def booted?
       @booted
     end
+
+    def directories(base)
+      Dir.chdir(base) do
+        Dir.entries(base).map do |e|
+          next if e =~ /^\.+$/ 
+          File.directory?(base / e) ? '/' + e : nil
+        end.compact
+      end
+    end
+
+    def page_directories
+      directories(Bones.root / 'pages')
+    end
+
+    def versioned_directories
+      Bones::VersionedRelease.directories
+    end
+
+    def public_directories
+      directories(Bones.root / 'public') - page_directories - versioned_directories
+    end
   end
   
   # Resets root, pages, and layouts paths and the base setting

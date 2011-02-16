@@ -1,5 +1,5 @@
 $:.unshift(File.dirname(__FILE__) + '/../')
-require 'lib/bones/boot'
+require 'lib/bones'
 require 'test/unit'
 
 class String

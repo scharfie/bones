@@ -1,11 +1,10 @@
-bones_boot = File.join(File.dirname(__FILE__), 'vendor/bones/lib/bones/boot.rb')
+vendor_bones = File.join(File.dirname(__FILE__), 'vendor/bones/lib/bones.rb')
 
-if File.file?(bones_boot)
-  require bones_boot
+if File.file?(vendor_bones)
+  require vendor_bones
 else
   require 'rubygems'
   require 'bones'
-  require 'bones/boot'
 end
   
 Bones.root = File.expand_path(File.dirname(__FILE__))

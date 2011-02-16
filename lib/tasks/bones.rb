@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '../bones/boot.rb')
+require File.join(File.dirname(__FILE__), '../bones.rb')
 
 task :default => :server
 
@@ -22,13 +22,13 @@ namespace :cache do
   end
   
   def generate_options_from_environment(extra={})
-    returning Bones::Cache::Options.new do |options|
-      destination = destination_from_environment
-      options.base = ENV['BASE'] unless ENV['BASE'].blank?
-      options.destination = destination unless destination.blank?
-      options.noop = true if ENV['NOOP']
-      options.merge extra
-    end  
+    options = Bones::Cache::Options.new
+    destination = destination_from_environment
+    options.base = ENV['BASE'] unless ENV['BASE'].blank?
+    options.destination = destination unless destination.blank?
+    options.noop = true if ENV['NOOP']
+    options.merge extra
+    options
   end
   
   task :simple do

@@ -162,7 +162,7 @@ class Bones
     #   # => /some_folder/page_path.html
     def normalize_url(path)
       @known_pairs ||= {}
-      @public_directories_regex ||= Regexp.new(public_directories.join('|'))
+      @public_directories_regex ||= Regexp.new(Bones.public_directories.join('|'))
   
       if v = @known_pairs[path]
         return v

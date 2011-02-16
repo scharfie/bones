@@ -1,0 +1,8 @@
+BONES="$PWD"
+rm -rf example
+bin/bones example
+cp -R test/example_site/* example/
+cd example
+mkdir vendor
+ln -nfs "$BONES" "vendor/bones"
+rake cache --trace

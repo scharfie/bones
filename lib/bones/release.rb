@@ -20,7 +20,7 @@ class Bones
   
     # Copies all public directories to the new release directory
     def copy_public_directories
-      public_directories.each do |src|
+      Bones.public_directories.each do |src|
         FileUtils.copy_entry Bones.root / 'public' / src, destination / src
       end
     end  

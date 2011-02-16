@@ -1,7 +1,7 @@
 class Bones
   class Server
     def self.run
-      statics = public_directories
+      statics = Bones.public_directories
       app = Rack::Builder.new do
         use Rack::CommonLogger
         use Rack::ShowExceptions
