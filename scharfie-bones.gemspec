@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "scharfie-bones"
-  s.version     = "0.2.6"
+  s.version     = "0.2.6.1"
   s.date        = "2011-02-15"
   s.authors     = ["Chris Scharf", "Ryan Heath"]
   s.email       = "scharfie@gmail.com"
@@ -86,5 +86,5 @@ Gem::Specification.new do |s|
 
   # Dependencies
   s.add_dependency("rack", [">= 0.3.0"])
-  s.add_dependency("activesupport", [">= 2.3.10"])
+  s.add_dependency("activesupport", ["= 2.3.10"])
 end

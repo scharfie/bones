@@ -1,6 +1,6 @@
 require 'rubygems'
 
-gem 'activesupport', '>= 2.3.10'
+gem 'activesupport', '= 2.3.10'
 gem 'rack',          '>= 0.3.0'
 
 require 'rack'
