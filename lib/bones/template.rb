@@ -73,19 +73,22 @@ class Bones
       @layout
     end
     
-    # Compiles the template (along with the layout
-    # if necessary)
-    def compile
-      # go away, favicon requests
-      return String.new if File.basename(filename) =~ /^favicon.ico/
-      
+    def source
       unless File.exist?(filename)
         raise "Template missing\n#{filename}"
       end
       
       src = ERB.new(File.read(filename)).src
       src = (local_assigns_source || '') + (src || '')
-      @content_for_layout = eval(src)
+    end
+
+    # Compiles the template (along with the layout
+    # if necessary)
+    def compile
+      # go away, favicon requests
+      return String.new if File.basename(filename) =~ /^favicon.ico/
+      
+      @content_for_layout = eval(source)
       
       if layout && File.file?(layout_filename)
         erb = ERB.new(File.read(layout_filename))
