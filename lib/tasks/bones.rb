@@ -1,5 +1,4 @@
-require File.join(File.dirname(__FILE__), '../bones.rb')
-
+# require File.join(File.dirname(__FILE__), '../bones.rb')
 task :default => :server
 
 desc "Start bones server"

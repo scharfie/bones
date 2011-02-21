@@ -1,6 +1,6 @@
 rm *.gem
 gem build scharfie-bones.gemspec
-gem install *.gem -t -V
+gem install *.gem --local -t -V
 # cd ../binbones
 # rm -rf bones-take*
 # /Users/Chris/.gem/ruby/1.8/bin/bones bones-take1
