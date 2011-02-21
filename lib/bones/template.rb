@@ -25,7 +25,11 @@ class Bones
         include klass.constantize
       end
     end
-    
+
+    def self.template_for_request(request)
+      request.path_info
+    end
+
     # Load the helpers
     include_helpers if Bones.booted?
     

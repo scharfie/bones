@@ -3,8 +3,20 @@ require File.dirname(__FILE__) + '/test_helper'
 context "Bones Template" do
   uses_example_site
   
+  def mock_request_for(path, options={})
+    Rack::Request.new(Rack::MockRequest.env_for(path, options))
+  end
+
   setup do
     @template = Bones::Template.new('')
+  end
+
+  test ".template_for_request" do
+    @request = mock_request_for("/about-something")
+    assert_include Bones::Template.template_for_request(@request), 'about-something'
+
+    @request = mock_request_for('/things/whatever')
+    assert_include Bones::Template.template_for_request(@request), 'things/whatever'
   end
 
   test "should return proper filename for top-level files" do

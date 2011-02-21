@@ -64,6 +64,10 @@ class Bones
   def self.reset
     @pages_path = @layouts_path = @root = @base = nil
   end
+
+  def template_for_request(request)
+    request.path_info
+  end
   
   # Process incoming request (for real this time!)
   def call(env)
@@ -72,7 +76,8 @@ class Bones
     
     # Create a new template for the given path
     # and compile it
-    template = Template.new(request.path_info)
+    
+    template = Template.filename_for_request(request)
     template.request = request
     output   = template.compile
 
