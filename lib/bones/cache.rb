@@ -141,8 +141,9 @@ class Bones
     end
     
     def process_page(page)
-      template = Bones::Template.new(page)
-      template.request = generate_mock_request(:path_info => page)
+      request = generate_mock_request(:path_info => page)
+      template = Bones::Template.new(Bones::Template.template_for_request(request))
+      template.request =
       process_template(template.compile)
     end
     
