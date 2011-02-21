@@ -141,9 +141,9 @@ class Bones
     end
     
     def process_page(page)
-      request = generate_mock_request(:path_info => page)
+      request = generate_mock_request(page)
       template = Bones::Template.new(Bones::Template.template_for_request(request))
-      template.request =
+      template.request = request
       process_template(template.compile)
     end
     
@@ -185,8 +185,8 @@ class Bones
       end    
     end    
 
-    def generate_mock_request(options={})
-      OpenStruct.new(options)
+    def generate_mock_request(path, options={})
+      Rack::Request.new(Rack::MockRequest.env_for(path, options))
     end
   end
 end
