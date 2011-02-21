@@ -4,6 +4,7 @@ if File.file?(vendor_bones)
   require vendor_bones
 else
   require 'rubygems'
+  gem      'scharfie-bones', '0.2.7'
   require 'bones'
 end
   
