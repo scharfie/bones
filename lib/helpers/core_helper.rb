@@ -53,10 +53,12 @@ module CoreHelper
     # Creates a stylesheet link tag
     def stylesheet_tag(name, options={})
       name += '.css' unless name =~ /\./
-      options.reverse_merge! :href => "/stylesheets/#{name}",
+      link_options = {
+        :href => "/stylesheets/#{name}",
         :rel => 'stylesheet', :type => 'text/css'
+      }.merge(options)
       
-      content_tag :link, options  
+      content_tag :link, link_options  
     end
 
     # Creates script tag to javascript(s)
